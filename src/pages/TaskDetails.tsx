@@ -1,4 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom'
+import { useSystemEscape } from '../hooks/useSystemEscape'
 import { useTasks } from '../contexts/TasksContext'
 import {
   faArrowLeft,
@@ -13,6 +14,8 @@ export default function TaskDetails() {
   const { tasks } = useTasks()
   const navigate = useNavigate()
   const task = tasks.find((t) => t.id === id)
+
+  useSystemEscape('/')
 
   const formatDateTime = (dateString?: string) => {
     if (!dateString) return null
