@@ -95,7 +95,7 @@ export default function NewTask({ onSave }: NewTaskProps) {
         </h2>
         <p className='text-[9px] font-mono text-slate-200 mt-2 uppercase tracking-[0.4em]'>
           {editingTask
-            ? `RE_INDEXING_ID::${editingTask.id.slice(0, 8)}`
+            ? `RE_INDEXING_ID::${String(editingTask.id).slice(0, 8)}`
             : 'SYSTEM_READY::WAITING_FOR_INPUT'}
         </p>
       </div>

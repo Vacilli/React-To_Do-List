@@ -8,8 +8,12 @@ import {
   useMemo,
 } from 'react'
 
+export type SortOption =
+  | 'Date_Created'
+  | 'Date_Updated'
+  | 'Priority'
+  | 'Alphabetical'
 export type TaskStatus = 'active' | 'completed' | 'archived'
-
 export type TaskFilter =
   | 'all'
   | 'active'
@@ -38,6 +42,8 @@ type TasksContextType = {
   setFilter: (filter: TaskFilter) => void
   searchQuery: string
   setSearchQuery: (query: string) => void
+  sortBy: SortOption
+  setBy: (option: SortOption) => void
 
   // Actions
   createTask: (task: TaskItem) => void
@@ -137,7 +143,7 @@ function TasksProvider({ children }: TasksProviderProps) {
     initialState,
     init,
   )
-  // The state for the lens we are looking through
+  const [sortBy, setBy] = useState<SortOption>('Date_Created')
   const [selectedFilter, setSelectedFilter] = useState<TaskFilter>('all')
   const [isPanelOpen, setIsPanelOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
@@ -151,6 +157,7 @@ function TasksProvider({ children }: TasksProviderProps) {
 
   // The Monitor (useMemo) - using the local selectedFilter state
   const visibleTasks = useMemo(() => {
+    // 1. Initial Filtering (Status/Category)
     let filtered = allTasks
 
     switch (selectedFilter) {
@@ -170,6 +177,7 @@ function TasksProvider({ children }: TasksProviderProps) {
         filtered = allTasks.filter((t) => t.status !== 'archived')
     }
 
+    // 2. Search Logic
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase()
       filtered = filtered.filter(
@@ -178,8 +186,39 @@ function TasksProvider({ children }: TasksProviderProps) {
           t.description.toLowerCase().includes(query),
       )
     }
-    return filtered
-  }, [allTasks, selectedFilter, searchQuery])
+
+    // 3. NEW: Sorting Logic (The final touch)
+    // We clone the array with [...] to avoid mutating state
+    return [...filtered].sort((a, b) => {
+      // --- PRIORITY PROTOCOL ---
+      if (sortBy === 'Priority') {
+        if (a.priority !== b.priority) {
+          return a.priority ? -1 : 1
+        }
+        // Tie-breaker: Newest first within the same priority group
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      }
+
+      // --- DATE CREATED PROTOCOL ---
+      if (sortBy === 'Date_Created') {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      }
+
+      // --- DATE UPDATED PROTOCOL ---
+      if (sortBy === 'Date_Updated') {
+        return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+      }
+
+      // --- ALPHABETICAL PROTOCOL ---
+      if (sortBy === 'Alphabetical') {
+        return a.title.localeCompare(b.title)
+      }
+
+      return 0
+    })
+
+    // Don't forget to add sortBy to the dependency array!
+  }, [allTasks, selectedFilter, searchQuery, sortBy])
 
   /* --- ACTIONS --- */
 
@@ -218,6 +257,8 @@ function TasksProvider({ children }: TasksProviderProps) {
         tasks: visibleTasks,
         allTasks,
         editingTask,
+        sortBy,
+        setBy,
 
         // Actions (Data)
         createTask,

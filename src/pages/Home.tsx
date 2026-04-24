@@ -3,14 +3,14 @@ import TaskListControls from '../components/TaskListControls'
 
 function Home() {
   return (
-    <div className='relative'>
-      {/* This wrapper ensures the search stays at the top of the 70% area */}
-      <div className='sticky top-0 z-10 bg-[#191b1c] py-4 border-b border-slate-200'>
+    <div className='relative min-h-screen'>
+      {/* 1. THE WALL: Force solid background and kill the light border */}
+      <div className='sticky top-0 z-[100] bg-[#191b1c] border-b border-white/5 shadow-xl'>
         <TaskListControls />
       </div>
 
-      {/* The actual task list that scrolls underneath */}
-      <div className='mt-4'>
+      {/* 2. THE CONTENT: Add enough padding so the first card isn't choked */}
+      <div className='p-6'>
         <TaskList />
       </div>
     </div>

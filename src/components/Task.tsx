@@ -96,7 +96,7 @@ export default function Task({ task }: TaskProps) {
             className={`text-[9px] font-mono transition-colors 
             ${isArchived ? 'text-cyan-800' : 'text-white/30 group-hover:text-white/60'}`}
           >
-            0x{task.id.slice(0, 4).toUpperCase()}
+            0x{String(task.id).slice(0, 4).toUpperCase()}
           </span>
         </div>
 

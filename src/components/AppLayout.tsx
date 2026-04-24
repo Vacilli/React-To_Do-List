@@ -43,10 +43,10 @@ export default function AppLayout() {
         {/* THE MASTER HEADER: Now handles its own internal views */}
         <Header />
 
-        <main className='flex-1 overflow-y-auto'>
+        <main className='flex-1 overflow-y-auto bg-[#191b1c]'>
           {!isPanelOpen ? (
             /* VIEW MODE: Task List or Task Details (via Router) */
-            <div className='px-8 pb-8'>
+            <div className='mx-auto w-full max-w-[1600px] px-8 pb-8'>
               <Outlet />
             </div>
           ) : (
