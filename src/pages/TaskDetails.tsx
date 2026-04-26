@@ -104,7 +104,7 @@ export default function TaskDetails() {
   const theme = getStatusTheme()
 
   return (
-    <div className='max-w-5xl mx-auto py-12 px-6 h-full overflow-y-auto'>
+    <div className='max-w-5xl mx-auto py-12 px-6 h-full overflow-y-auto animate-scan'>
       {/* 1. Header Navigation */}
       <button
         className='flex items-center gap-2 text-slate-500 hover:text-white transition-colors mb-12 group'

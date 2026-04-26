@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { type TaskItem } from '../contexts/TasksContext'
+import { useTasks, type TaskItem } from '../contexts/TasksContext'
 import EditOrDeleteTask from './taskManipulation'
 
 type TaskProps = {
@@ -7,6 +7,7 @@ type TaskProps = {
 }
 
 export default function Task({ task }: TaskProps) {
+  const { viewMode } = useTasks()
   const isArchived = task.status === 'archived'
 
   const formatDate = (dateString: string) => {
@@ -36,6 +37,85 @@ export default function Task({ task }: TaskProps) {
         : task.priority
           ? syntaxColors.priority
           : syntaxColors.ongoing
+
+  // --- 1. LIST VIEW LOGIC ---
+  if (viewMode === 'list') {
+    return (
+      <div className='group relative flex flex-row items-center justify-between gap-6 p-6 bg-[#151616] transition-all duration-300'>
+        {/* THE ARROW HOVER (HUD Brackets) */}
+        <div
+          className={`absolute top-0 left-0 w-2 h-2 border-t border-l opacity-0 group-hover:opacity-100 transition-all duration-300 ${currentSyntax.split(' ')[2]}`}
+        />
+        <div
+          className={`absolute top-0 right-0 w-2 h-2 border-t border-r opacity-0 group-hover:opacity-100 transition-all duration-300 ${currentSyntax.split(' ')[2]}`}
+        />
+        <div
+          className={`absolute bottom-0 left-0 w-2 h-2 border-b border-l opacity-0 group-hover:opacity-100 transition-all duration-300 ${currentSyntax.split(' ')[2]}`}
+        />
+        <div
+          className={`absolute bottom-0 right-0 w-2 h-2 border-b border-r opacity-0 group-hover:opacity-100 transition-all duration-300 ${currentSyntax.split(' ')[2]}`}
+        />
+
+        {/* LEFT: Core Data Stack */}
+        <div className='flex flex-col gap-1 relative z-10 flex-grow min-w-0'>
+          <div className='flex items-center gap-3'>
+            <span
+              className={`text-[9px] font-mono font-bold uppercase tracking-[0.2em] ${isArchived ? 'text-yellow-500/50' : currentSyntax.split(' ')[0]}`}
+            >
+              {isArchived
+                ? '[V]'
+                : task.status === 'completed'
+                  ? '[]'
+                  : task.priority
+                    ? '!!'
+                    : '>>'}
+            </span>
+            <h2
+              className={`text-base font-black uppercase tracking-tight truncate ${task.status === 'completed' ? 'line-through text-slate-500' : 'text-slate-100'}`}
+            >
+              {task.title}
+            </h2>
+          </div>
+
+          {task.description && (
+            <p className='text-[12px] font-mono text-slate-500 italic line-clamp-1 pl-7'>
+              /* {task.description} */
+            </p>
+          )}
+
+          <div className='flex items-center gap-2 pl-7 opacity-40 group-hover:opacity-80 transition-opacity'>
+            <span className='text-[9px] font-mono uppercase tracking-widest text-slate-500'>
+              timestamp:
+            </span>
+            <span
+              className={`text-[10px] font-mono font-bold ${isArchived ? 'text-cyan-600' : 'text-emerald-500'}`}
+            >
+              '{formatDate(task.createdAt)}'
+            </span>
+          </div>
+        </div>
+
+        {/* RIGHT: Control Modules */}
+        <div className='flex items-center gap-4 relative z-10 shrink-0'>
+          <div className='flex justify-end border-white/5'>
+            <EditOrDeleteTask task={task} />
+          </div>
+
+          <Link
+            to={`/task/${task.id}`}
+            className={`text-[9px] font-black uppercase tracking-widest px-4 py-2 border transition-all duration-300
+    ${
+      isArchived
+        ? 'border-cyan-900 text-cyan-900 group-hover:border-cyan-400 group-hover:text-cyan-400 group-hover:shadow-[0_0_15px_rgba(34,211,238,0.2)]'
+        : `${currentSyntax} hover:bg-white/5`
+    }`}
+          >
+            {isArchived ? 'DECRYPT_LOG' : 'DEBUG_LOG'}
+          </Link>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <article

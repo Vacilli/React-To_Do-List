@@ -14,12 +14,14 @@ export type SortOption =
   | 'Priority'
   | 'Alphabetical'
 export type TaskStatus = 'active' | 'completed' | 'archived'
+
 export type TaskFilter =
   | 'all'
   | 'active'
   | 'priority'
   | 'completed'
   | 'archived'
+export type ViewMode = 'grid' | 'list'
 
 export type TaskItem = {
   title: string
@@ -55,6 +57,8 @@ type TasksContextType = {
   isPanelOpen: boolean
   openPanel: () => void
   closePanel: () => void
+  viewMode: ViewMode
+  setViewMode: (mode: ViewMode) => void
 }
 
 type Action =
@@ -66,17 +70,20 @@ type Action =
   | { type: 'task/setEditing'; payload: TaskItem | null }
   /* This controls the lens (Filter) we are looking through */
   | { type: 'task/setFilter'; payload: TaskFilter }
+  | { type: 'task/setViewMode'; payload: ViewMode }
 
 type State = {
   allTasks: TaskItem[]
   editingTask: TaskItem | null
   selectedFilter: TaskFilter // Changed from selectedStatus to use our new Filter type
+  viewMode: ViewMode
 }
 
 const initialState: State = {
   allTasks: [],
   editingTask: null,
   selectedFilter: 'all',
+  viewMode: 'grid',
 }
 
 type TasksProviderProps = {
@@ -120,6 +127,9 @@ function reducer(state: State, action: Action): State {
     case 'task/setFilter':
       return { ...state, selectedFilter: action.payload }
 
+    case 'task/setViewMode':
+      return { ...state, viewMode: action.payload }
+
     default:
       throw new Error('Unhandled action type')
   }
@@ -127,18 +137,36 @@ function reducer(state: State, action: Action): State {
 
 function init(initialState: State): State {
   const savedTasks = localStorage.getItem('tasks')
+  const savedView = localStorage.getItem('ViewMode')
 
+  // 1. Prepare our hydrated state with defaults
+  const hydratedState = { ...initialState }
+
+  // 2. Handle Tasks Hydration
   if (savedTasks) {
-    const parsedTasks = JSON.parse(savedTasks)
-    // We only care about populating the Master List (allTasks)
-    return { ...initialState, allTasks: parsedTasks }
+    try {
+      const parsedTasks = JSON.parse(savedTasks)
+      hydratedState.allTasks = parsedTasks
+    } catch (e) {
+      console.error('Failed to parse tasks from localStorage', e)
+      hydratedState.allTasks = []
+    }
+  } else {
+    hydratedState.allTasks = []
   }
 
-  return { ...initialState, allTasks: [] }
+  // 3. Handle ViewMode Hydration (The "Pimp My Resume" logic)
+  if (savedView === 'grid' || savedView === 'list') {
+    hydratedState.viewMode = savedView
+  } else {
+    hydratedState.viewMode = 'grid' // Default fallback
+  }
+
+  return hydratedState
 }
 
 function TasksProvider({ children }: TasksProviderProps) {
-  const [{ allTasks, editingTask }, dispatch] = useReducer(
+  const [{ allTasks, editingTask, viewMode }, dispatch] = useReducer(
     reducer,
     initialState,
     init,
@@ -244,6 +272,13 @@ function TasksProvider({ children }: TasksProviderProps) {
     setSelectedFilter(filter)
   }
 
+  const setViewMode = (mode: ViewMode) => {
+    // 1. Update the state
+    dispatch({ type: 'task/setViewMode', payload: mode })
+    // 2. Persist to localStorage (So it stays set on refresh)
+    localStorage.setItem('viewMode', mode)
+  }
+
   /* --- STORAGE SYNC --- */
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(allTasks))
@@ -274,6 +309,8 @@ function TasksProvider({ children }: TasksProviderProps) {
         isPanelOpen,
         openPanel,
         closePanel,
+        viewMode,
+        setViewMode,
       }}
     >
       {children}

@@ -51,7 +51,7 @@ export default function AppLayout() {
             </div>
           ) : (
             /* EDIT/ADD MODE: The Terminal-style Form */
-            <div className='flex-1 flex flex-col animate-in slide-in-from-right duration-300 p-12'>
+            <div className='flex-1 flex flex-col animate-scan p-12'>
               <div className='max-w-2xl mx-auto w-full'>
                 <NewTask onSave={closePanel} />
               </div>

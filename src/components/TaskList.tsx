@@ -1,16 +1,25 @@
 import Task from './Task'
 import { useTasks } from '../contexts/TasksContext'
 import EmptyState from './EmptyState'
+// import { motion, AnimatePresence } from 'framer-motion'
 
 export default function TaskList() {
-  // We grab 'tasks' (already sorted/filtered by the Context Monitor)
-  const { tasks } = useTasks()
+  const { tasks, viewMode } = useTasks()
 
   if (tasks.length === 0) return <EmptyState />
 
+  // Only change the UL layout, keep the LI structure identical to maintain your ultra-wide fix
+  const containerClasses =
+    viewMode === 'grid'
+      ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6'
+      : 'flex flex-col gap-4 max-w-7xl mx-auto w-full' // List is just a single column stack
+
   return (
     <div className='infinite-scroll-container'>
-      <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6'>
+      <ul
+        key={`${viewMode}-${tasks.length}`}
+        className={`${containerClasses} animate-scan`}
+      >
         {tasks.map((task) => (
           <li
             key={task.id}
@@ -23,7 +32,7 @@ export default function TaskList() {
             <div className='bg-[#111111] p-5 border border-white/2'>
               <Task task={task} />
 
-              {/* Status Ribbon - Integrated into the card bottom */}
+              {/* Status Ribbon - This stays exactly as you wrote it */}
               <div className='mt-6 pt-4 border-t border-white/5 flex justify-between items-center'>
                 <span
                   className={`
@@ -48,7 +57,6 @@ export default function TaskList() {
                         : 'STATUS::ACTIVE'}
                 </span>
 
-                {/* The "Sector Hash" - Using the String() fix we just found */}
                 <span className='text-[8px] font-mono text-white/40 uppercase tracking-tighter'>
                   Sector_0x{String(task.id).slice(-3).toUpperCase()}
                 </span>
