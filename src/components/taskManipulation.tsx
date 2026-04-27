@@ -5,7 +5,7 @@ import {
   faFire,
   faCheckDouble,
   faRotateLeft,
-  faBoxArchive, // New for the Vault
+  faBoxArchive,
 } from '@fortawesome/free-solid-svg-icons'
 import { type TaskItem } from '../contexts/TasksContext'
 import { useTasks } from '../contexts/TasksContext'
@@ -18,17 +18,17 @@ export default function EditOrDeleteTask({ task }: { task: TaskItem }) {
     openPanel()
   }
 
-  // Base style preserved exactly
+  // UPDATED: Now uses semantic variables for background and borders
   const btnBase =
-    'p-2.5 transition-all duration-200 flex items-center justify-center border border-white/5 bg-white/5 hover:bg-white/10'
+    'p-2.5 transition-all duration-200 flex items-center justify-center border border-[var(--border-subtle)] bg-[var(--text-main)]/5 hover:bg-[var(--text-main)]/10'
 
   return (
-    <div className='flex items-center gap-1 bg-black/40 p-1 rounded-sm border border-white/10'>
+    <div className='flex items-center gap-1 bg-[var(--bg-sidebar)]/40 p-1 rounded-sm border border-[var(--border-subtle)]'>
       {/* PRIORITY - Only show if NOT completed/archived */}
       {task.status === 'active' && (
         <button
           onClick={() => updateTask({ ...task, priority: !task.priority })}
-          className={`${btnBase} hover:border-orange-500/50 text-slate-500 hover:text-orange-500`}
+          className={`${btnBase} hover:border-orange-500/50 text-[var(--text-dim)] hover:text-orange-500`}
         >
           <FontAwesomeIcon
             icon={faFire}
@@ -45,7 +45,7 @@ export default function EditOrDeleteTask({ task }: { task: TaskItem }) {
       {task.status === 'active' && (
         <button
           onClick={handleEdit}
-          className={`${btnBase} hover:border-blue-500/50 text-slate-500 hover:text-blue-500`}
+          className={`${btnBase} hover:border-blue-500/50 text-[var(--text-dim)] hover:text-blue-500`}
         >
           <FontAwesomeIcon icon={faPenToSquare} className='w-3.5 h-3.5' />
         </button>
@@ -63,7 +63,6 @@ export default function EditOrDeleteTask({ task }: { task: TaskItem }) {
       )}
 
       {/* RESTORE / COMPLETE TOGGLE */}
-      {/* If Archived, this button restores to active. If Active/Comp, it toggles between them. */}
       <button
         onClick={() => {
           let nextStatus: 'active' | 'completed' = 'completed'
@@ -79,7 +78,7 @@ export default function EditOrDeleteTask({ task }: { task: TaskItem }) {
         className={`${btnBase} ${
           task.status !== 'active'
             ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/30'
-            : 'hover:border-emerald-500/50 text-slate-500 hover:text-emerald-400'
+            : 'hover:border-emerald-500/50 text-[var(--text-dim)] hover:text-emerald-400'
         }`}
       >
         <FontAwesomeIcon
@@ -89,12 +88,12 @@ export default function EditOrDeleteTask({ task }: { task: TaskItem }) {
       </button>
 
       {/* Vertical Spacer */}
-      <div className='w-[1px] h-4 bg-white/10 mx-1' />
+      <div className='w-[1px] h-4 bg-[var(--border-subtle)] mx-1' />
 
       {/* DELETE - Purge from Codex */}
       <button
         onClick={() => deleteTask(task.id)}
-        className={`${btnBase} text-slate-500 hover:text-red-500 hover:border-red-500/50 ${
+        className={`${btnBase} text-[var(--text-dim)] hover:text-red-500 hover:border-red-500/50 ${
           task.status === 'archived' ? 'border-red-900/50 text-red-900' : ''
         }`}
       >

@@ -36,20 +36,21 @@ export default function TaskListControls() {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
 
+  /* Variable-driven base for controls */
   const ctrlBase =
-    'flex items-center gap-2 bg-black/20 border border-white/5 px-3 py-1.5 transition-all duration-200'
+    'flex items-center gap-2 bg-[var(--bg-main)]/40 border border-[var(--border-subtle)] px-3 py-1.5 transition-all duration-200'
 
   return (
-    <div className='flex items-center justify-between px-4 py-4 bg-[#191b1c] border-b border-white/5'>
+    /* Removed shadow-xl and applied border-subtle for a seamless transition */
+    <div className='flex items-center justify-between px-4 py-4 bg-[var(--bg-main)] border-b border-[var(--border-subtle)]'>
       {/* LEFT SIDE: Protocol Counter - FIXED WIDTH ANCHOR */}
       <div className='flex items-center gap-3 w-[200px] shrink-0'>
         <div className='flex flex-col'>
-          <span className='text-[10px] font-mono text-slate-500 uppercase tracking-tighter'>
+          <span className='text-[10px] font-mono text-[var(--text-dim)] uppercase tracking-tighter'>
             Active_Processes
           </span>
           <div className='flex items-center gap-2'>
-            {/* Using w-[2ch] ensures 1 digit or 2 digits take the same space */}
-            <span className='text-lg font-black font-mono text-white inline-block w-[2ch]'>
+            <span className='text-lg font-black font-mono text-[var(--text-main)] inline-block w-[2ch]'>
               {String(totalTasks).padStart(2, '0')}
             </span>
             <span className='h-2 w-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]' />
@@ -63,28 +64,28 @@ export default function TaskListControls() {
         <div className='relative group' ref={dropdownRef}>
           <button
             onClick={() => setIsSortOpen(!isSortOpen)}
-            className={`${ctrlBase} hover:border-white/20 hover:bg-white/5 cursor-pointer min-w-[190px] justify-between`}
+            className={`${ctrlBase} hover:border-[var(--accent-action)]/40 hover:bg-[var(--text-main)]/[0.05] cursor-pointer min-w-[190px] justify-between`}
           >
             <div className='flex items-center gap-2'>
               <FontAwesomeIcon
                 icon={faFilter}
-                className={`w-3 h-3 ${isSortOpen ? 'text-blue-400' : 'text-slate-500'}`}
+                className={`w-3 h-3 ${isSortOpen ? 'text-[var(--accent-action)]' : 'text-[var(--text-dim)]'}`}
               />
-              <span className='text-[10px] font-bold uppercase tracking-widest text-slate-300'>
+              <span className='text-[10px] font-bold uppercase tracking-widest text-[var(--text-main)]'>
                 Sort::{sortBy.replace('_', ' ')}
               </span>
             </div>
             <FontAwesomeIcon
               icon={faChevronDown}
-              className={`w-2 h-2 text-slate-600 transition-transform duration-200 ${isSortOpen ? 'rotate-180' : ''}`}
+              className={`w-2 h-2 text-[var(--text-dim)] transition-transform duration-200 ${isSortOpen ? 'rotate-180' : ''}`}
             />
           </button>
 
           {/* TERMINAL DROPDOWN */}
           {isSortOpen && (
             <div
-              className='absolute top-full right-0 mt-2 w-full min-w-[200px] bg-[#1e2021] border border-white/10 z-[999] shadow-[0_20px_50px_rgba(0,0,0,0.8)] animate-in fade-in slide-in-from-top-1 duration-200'
-              style={{ backgroundColor: '#1e2021' }}
+              className='absolute top-full right-0 mt-2 w-full min-w-[200px] bg-[var(--bg-task)] border border-[var(--border-subtle)] z-[999] animate-in fade-in slide-in-from-top-1 duration-200'
+              style={{ backgroundColor: 'var(--bg-task)' }}
             >
               <div className='flex flex-col py-1'>
                 {sortOptions.map((option) => (
@@ -98,13 +99,13 @@ export default function TaskListControls() {
                     }}
                     className={`w-full text-left px-4 py-3 text-[10px] font-mono uppercase tracking-widest transition-all ${
                       sortBy === option
-                        ? 'text-blue-400 bg-white/10'
-                        : 'text-slate-400 hover:bg-white/5 hover:text-white'
+                        ? 'text-[var(--accent-action)] bg-[var(--text-main)]/[0.05]'
+                        : 'text-[var(--text-dim)] hover:bg-[var(--text-main)]/[0.03] hover:text-[var(--text-main)]'
                     }`}
                   >
                     {option.replace('_', ' ')}
                     {sortBy === option && (
-                      <span className='float-right text-blue-400/50'>
+                      <span className='float-right text-[var(--accent-action)]/50'>
                         _ACTIVE
                       </span>
                     )}
@@ -116,16 +117,16 @@ export default function TaskListControls() {
         </div>
 
         {/* SEPARATOR */}
-        <div className='h-6 w-[1px] bg-white/5 mx-1' />
+        <div className='h-6 w-[1px] bg-[var(--border-subtle)] mx-1' />
 
         {/* DISPLAY MODE */}
-        <div className='flex bg-black/40 p-1 border border-white/5 shrink-0 w-[86px]'>
+        <div className='flex bg-[var(--bg-sidebar)] p-1 border border-[var(--border-subtle)] shrink-0 w-[86px]'>
           <button
             onClick={() => setViewMode('grid')}
             className={`p-1.5 px-3 border transition-all ${
               viewMode === 'grid'
-                ? 'bg-white/10 text-white border-white/10'
-                : 'text-slate-600 border-transparent hover:text-slate-300'
+                ? 'bg-[var(--text-main)]/[0.1] text-[var(--text-main)] border-[var(--border-subtle)]'
+                : 'text-[var(--text-dim)] border-transparent hover:text-[var(--text-main)]'
             }`}
             title='Grid_Layout'
           >
@@ -136,8 +137,8 @@ export default function TaskListControls() {
             onClick={() => setViewMode('list')}
             className={`p-1.5 px-3 border transition-all ${
               viewMode === 'list'
-                ? 'bg-white/10 text-white border-white/10'
-                : 'text-slate-600 border-transparent hover:text-slate-300'
+                ? 'bg-[var(--text-main)]/[0.1] text-[var(--text-main)] border-[var(--border-subtle)]'
+                : 'text-[var(--text-dim)] border-transparent hover:text-[var(--text-main)]'
             }`}
             title='List_Layout'
           >

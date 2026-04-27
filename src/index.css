@@ -1,10 +1,57 @@
 @import 'tailwindcss';
 @tailwind utilities;
 
-@theme {
-  --color-charcoal: #3a4346;
-  --color-codex-yellow: #f7e596;
-  --color-codex-orange: #ffb28d;
+/*tasklist section bg #191b1c */
+/*task bg #111111 */
+/*task inner bg section bg #151616 */
+/*sidebar bg #0d0d0d */
+/*priority orange orange-400/500 */
+/*active blue blue-400/500 */
+/*archive cyan-400/500 */
+
+:root {
+  /* NETSPHERE (DARK) - Current */
+  --bg-sidebar: #0d0d0d;
+  --bg-main: #191b1c;
+  --bg-task: #111111;
+  --bg-task-inner: #151616;
+  --text-main: #f1f5f9;
+  --text-dim: #64748b; /* slate-500 */
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --accent-action: #10b981;
+}
+
+[data-theme='light'] {
+  /* CLEAN-ROOM (LIGHT) - The Inversion */
+  --bg-sidebar: #f0f0f2;
+  --bg-main: #f7f7f8;
+  --bg-task: #ffffff;
+  --bg-task-inner: #fafafa;
+  --text-main: #1a1b1c;
+  --text-dim: #64748b;
+  --border-subtle: #dde1e4;
+  --accent-action: #af8700; /* Muted Brass for Light Mode */
+}
+
+/* Prevent layout shift from scrollbar */
+html {
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+}
+
+/* Ensure the container height doesn't collapse during view switch */
+.infinite-scroll-container {
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* GLOBAL TRANSITION - Makes the "flip" feel smooth */
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease;
 }
 
 /* Add to your tailwind or CSS file */
@@ -43,18 +90,6 @@
   position: absolute;
   bottom: -2px;
   right: -2px;
-}
-
-/* Prevent layout shift from scrollbar */
-html {
-  overflow-y: scroll;
-  scrollbar-gutter: stable;
-}
-
-/* Ensure the container height doesn't collapse during view switch */
-.infinite-scroll-container {
-  min-height: 100vh;
-  width: 100%;
 }
 
 @keyframes netsphere-scan {

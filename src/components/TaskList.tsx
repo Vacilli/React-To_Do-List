@@ -24,16 +24,16 @@ export default function TaskList() {
           <li
             key={task.id}
             className={`
-              relative group bg-[#111111] border border-white/5 p-1 transition-all duration-300 hover:border-white/10
+              relative group bg-[var(--bg-task-inner)] border border-[var(--border-subtle)] p-1 transition-all duration-300 hover:border-[var(--text-dim)]/20
               ${task.status === 'completed' ? 'opacity-40 grayscale-[0.5]' : 'opacity-100'}
             `}
           >
             {/* Internal Padding & Layout */}
-            <div className='bg-[#111111] p-5 border border-white/2'>
+            <div className='bg-[var(--bg-task-inner)] p-5 border border-[var(--text-main)]/5'>
               <Task task={task} />
 
               {/* Status Ribbon - This stays exactly as you wrote it */}
-              <div className='mt-6 pt-4 border-t border-white/5 flex justify-between items-center'>
+              <div className='mt-6 pt-4 border-t border-[var(--border-subtle)] flex justify-between items-center'>
                 <span
                   className={`
                   text-[9px] font-mono font-black uppercase px-2 py-1 tracking-widest transition-all duration-300
@@ -57,15 +57,15 @@ export default function TaskList() {
                         : 'STATUS::ACTIVE'}
                 </span>
 
-                <span className='text-[8px] font-mono text-white/40 uppercase tracking-tighter'>
+                <span className='text-[8px] font-mono text-[var(--text-dim)] uppercase tracking-tighter'>
                   Sector_0x{String(task.id).slice(-3).toUpperCase()}
                 </span>
               </div>
             </div>
 
             {/* Corner Accents */}
-            <div className='absolute top-0 right-0 w-2 h-2 border-t border-r border-white/10 group-hover:border-white/40 transition-colors' />
-            <div className='absolute bottom-0 left-0 w-2 h-2 border-b border-l border-white/10 group-hover:border-white/40 transition-colors' />
+            <div className='absolute top-0 right-0 w-2 h-2 border-t border-r border-[var(--border-subtle)] group-hover:border-[var(--text-dim)]/40 transition-colors' />
+            <div className='absolute bottom-0 left-0 w-2 h-2 border-b border-l border-[var(--border-subtle)] group-hover:border-[var(--text-dim)]/40 transition-colors' />
           </li>
         ))}
       </ul>

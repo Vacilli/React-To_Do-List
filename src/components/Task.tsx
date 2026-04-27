@@ -26,7 +26,8 @@ export default function Task({ task }: TaskProps) {
     ongoing: 'text-blue-400 border-blue-500/30 group-hover:border-blue-500',
     completed:
       'text-emerald-400 border-emerald-500/30 group-hover:border-emerald-500',
-    archived: 'text-cyan-400 border-cyan-800/50 group-hover:border-yellow-500',
+    archived:
+      'text-cyan-400 border-cyan-800/50 group-hover:border-[var(--accent-color)]',
   }
 
   const currentSyntax =
@@ -41,8 +42,8 @@ export default function Task({ task }: TaskProps) {
   // --- 1. LIST VIEW LOGIC ---
   if (viewMode === 'list') {
     return (
-      <div className='group relative flex flex-row items-center justify-between gap-6 p-6 bg-[#151616] transition-all duration-300'>
-        {/* THE ARROW HOVER (HUD Brackets) */}
+      <div className='group relative flex flex-row items-center justify-between gap-6 p-6 bg-[var(--bg-task-inner)] border-b border-[var(--border-subtle)] transition-all duration-300'>
+        {/* HUD Brackets */}
         <div
           className={`absolute top-0 left-0 w-2 h-2 border-t border-l opacity-0 group-hover:opacity-100 transition-all duration-300 ${currentSyntax.split(' ')[2]}`}
         />
@@ -60,7 +61,7 @@ export default function Task({ task }: TaskProps) {
         <div className='flex flex-col gap-1 relative z-10 flex-grow min-w-0'>
           <div className='flex items-center gap-3'>
             <span
-              className={`text-[9px] font-mono font-bold uppercase tracking-[0.2em] ${isArchived ? 'text-yellow-500/50' : currentSyntax.split(' ')[0]}`}
+              className={`text-[9px] font-mono font-bold uppercase tracking-[0.2em] ${isArchived ? 'text-[var(--accent-color)]/70' : currentSyntax.split(' ')[0]}`}
             >
               {isArchived
                 ? '[V]'
@@ -71,20 +72,20 @@ export default function Task({ task }: TaskProps) {
                     : '>>'}
             </span>
             <h2
-              className={`text-base font-black uppercase tracking-tight truncate ${task.status === 'completed' ? 'line-through text-slate-500' : 'text-slate-100'}`}
+              className={`text-base font-black uppercase tracking-tight truncate ${task.status === 'completed' ? 'line-through text-[var(--text-dim)]' : 'text-[var(--text-main)]'}`}
             >
               {task.title}
             </h2>
           </div>
 
           {task.description && (
-            <p className='text-[12px] font-mono text-slate-500 italic line-clamp-1 pl-7'>
+            <p className='text-[12px] font-mono text-[var(--text-dim)] italic line-clamp-1 pl-7'>
               /* {task.description} */
             </p>
           )}
 
           <div className='flex items-center gap-2 pl-7 opacity-40 group-hover:opacity-80 transition-opacity'>
-            <span className='text-[9px] font-mono uppercase tracking-widest text-slate-500'>
+            <span className='text-[9px] font-mono uppercase tracking-widest text-[var(--text-dim)]'>
               timestamp:
             </span>
             <span
@@ -97,18 +98,17 @@ export default function Task({ task }: TaskProps) {
 
         {/* RIGHT: Control Modules */}
         <div className='flex items-center gap-4 relative z-10 shrink-0'>
-          <div className='flex justify-end border-white/5'>
+          <div className='flex justify-end border-[var(--border-subtle)]'>
             <EditOrDeleteTask task={task} />
           </div>
 
           <Link
             to={`/task/${task.id}`}
-            className={`text-[9px] font-black uppercase tracking-widest px-4 py-2 border transition-all duration-300
-    ${
-      isArchived
-        ? 'border-cyan-900 text-cyan-900 group-hover:border-cyan-400 group-hover:text-cyan-400 group-hover:shadow-[0_0_15px_rgba(34,211,238,0.2)]'
-        : `${currentSyntax} hover:bg-white/5`
-    }`}
+            className={`text-[9px] font-black uppercase tracking-widest px-4 py-2 border transition-all duration-300 ${
+              isArchived
+                ? 'border-cyan-900 text-cyan-900 group-hover:border-cyan-400 group-hover:text-cyan-400 group-hover:shadow-[0_0_15px_rgba(34,211,238,0.2)]'
+                : `${currentSyntax} hover:bg-[var(--text-main)]/5`
+            }`}
           >
             {isArchived ? 'DECRYPT_LOG' : 'DEBUG_LOG'}
           </Link>
@@ -117,17 +117,14 @@ export default function Task({ task }: TaskProps) {
     )
   }
 
+  // --- 2. GRID VIEW LOGIC ---
   return (
     <article
       className={`group relative p-5 transition-all duration-200 shadow-2xl
-        ${
-          isArchived
-            ? 'bg-[#151616] border border-cyan-900/30'
-            : 'bg-[#151616] border border-white/5'
-        } 
+        ${isArchived ? 'bg-[var(--bg-task-inner)] border border-cyan-900/30' : 'bg-[var(--bg-task-inner)] border border-[var(--border-subtle)]'} 
         ${task.status === 'completed' ? 'opacity-50' : 'opacity-100'}`}
     >
-      {/* GENERIC BRACKET HUD: Applied to all, colored by syntax */}
+      {/* HUD Brackets */}
       <div
         className={`absolute top-0 left-0 w-2 h-2 border-t border-l opacity-0 group-hover:opacity-100 transition-all duration-300 ${currentSyntax.split(' ')[2]}`}
       />
@@ -146,7 +143,7 @@ export default function Task({ task }: TaskProps) {
           <div className='flex flex-col flex-grow'>
             <span
               className={`text-[9px] font-mono font-bold uppercase tracking-[0.2em] mb-1 
-    ${isArchived ? 'text-yellow-500/50 group-hover:text-yellow-500' : currentSyntax.split(' ')[0]}`}
+              ${isArchived ? 'text-[var(--accent-color)]/50 group-hover:text-[var(--accent-color)]' : currentSyntax.split(' ')[0]}`}
             >
               {isArchived
                 ? '[V]'
@@ -165,24 +162,22 @@ export default function Task({ task }: TaskProps) {
             </span>
             <h2
               className={`text-base font-black tracking-tight uppercase transition-colors min-h-[3rem] flex items-center
-    ${isArchived ? 'text-cyan-100/90 group-hover:text-white' : 'text-slate-100'} 
-    ${task.status === 'completed' ? 'line-through decoration-slate-500' : ''}`}
+              ${isArchived ? 'text-cyan-100/90 group-hover:text-[var(--text-main)]' : 'text-[var(--text-main)]'} 
+              ${task.status === 'completed' ? 'line-through decoration-[var(--text-dim)]' : ''}`}
             >
               {task.title}
             </h2>
           </div>
 
           <span
-            className={`text-[9px] font-mono transition-colors 
-            ${isArchived ? 'text-cyan-800' : 'text-white/30 group-hover:text-white/60'}`}
+            className={`text-[9px] font-mono transition-colors ${isArchived ? 'text-cyan-800' : 'text-[var(--text-dim)]/50 group-hover:text-[var(--text-dim)]'}`}
           >
             0x{String(task.id).slice(0, 4).toUpperCase()}
           </span>
         </div>
 
         <p
-          className={`text-md leading-5 line-clamp-2 font-mono italic transition-colors flex-grow min-h-[40px]
-  ${isArchived ? 'text-cyan-900 group-hover:text-cyan-400' : 'text-slate-400'}`}
+          className={`text-md leading-5 line-clamp-2 font-mono italic transition-colors flex-grow min-h-[40px] ${isArchived ? 'text-cyan-900 group-hover:text-cyan-400' : 'text-[var(--text-dim)]'}`}
         >
           /* {task.description || 'no_context_provided'} */
         </p>
@@ -190,14 +185,12 @@ export default function Task({ task }: TaskProps) {
         <div className='flex items-center gap-4 pt-2'>
           <div className='flex flex-col opacity-60 group-hover:opacity-100 transition-opacity'>
             <span
-              className={`text-[10px] font-mono uppercase tracking-tighter 
-              ${isArchived ? 'text-yellow-500' : 'text-slate-100'}`}
+              className={`text-[10px] font-mono uppercase tracking-tighter ${isArchived ? 'text-[var(--accent-color)]' : 'text-[var(--text-main)]'}`}
             >
               const timestamp =
             </span>
             <p
-              className={`text-[11px] font-mono font-bold uppercase 
-              ${isArchived ? 'text-cyan-600 group-hover:text-cyan-400' : 'text-emerald-500'}`}
+              className={`text-[11px] font-mono font-bold uppercase ${isArchived ? 'text-cyan-600 group-hover:text-cyan-400' : 'text-emerald-500'}`}
             >
               '{formatDate(task.createdAt)}'
             </p>
@@ -205,12 +198,11 @@ export default function Task({ task }: TaskProps) {
 
           <Link
             to={`/task/${task.id}`}
-            className={`ml-auto text-[9px] font-black uppercase tracking-widest px-3 py-1.5 border transition-all 
-    ${
-      isArchived
-        ? 'border-cyan-900 text-cyan-900 group-hover:border-cyan-400 group-hover:text-cyan-400 group-hover:shadow-[0_0_10px_rgba(34,211,238,0.3)]'
-        : currentSyntax
-    }`}
+            className={`ml-auto text-[9px] font-black uppercase tracking-widest px-3 py-1.5 border transition-all ${
+              isArchived
+                ? 'border-cyan-900 text-cyan-900 group-hover:border-cyan-400 group-hover:text-cyan-400 group-hover:shadow-[0_0_10px_rgba(34,211,238,0.3)]'
+                : currentSyntax
+            }`}
           >
             {isArchived ? 'DECRYPT_LOG' : 'DEBUG_LOG'}
           </Link>
@@ -218,8 +210,7 @@ export default function Task({ task }: TaskProps) {
       </div>
 
       <div
-        className={`mt-5 pt-4 border-t flex justify-end 
-        ${isArchived ? 'border-cyan-900/20' : 'border-white/5'}`}
+        className={`mt-5 pt-4 border-t flex justify-end ${isArchived ? 'border-cyan-900/20' : 'border-[var(--border-subtle)]'}`}
       >
         <EditOrDeleteTask task={task} />
       </div>

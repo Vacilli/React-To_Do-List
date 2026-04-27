@@ -5,6 +5,7 @@ import './index.css'
 import Home from './pages/Home'
 import TaskDetails from './pages/TaskDetails'
 import Error from './components/Error'
+import { ThemeProvider } from './contexts/ThemeContext'
 
 const router = createBrowserRouter([
   {
@@ -26,8 +27,10 @@ const router = createBrowserRouter([
 
 export default function App() {
   return (
-    <TasksProvider>
-      <RouterProvider router={router} />
-    </TasksProvider>
+    <ThemeProvider>
+      <TasksProvider>
+        <RouterProvider router={router} />
+      </TasksProvider>
+    </ThemeProvider>
   )
 }

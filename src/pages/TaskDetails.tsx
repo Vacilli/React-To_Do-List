@@ -30,21 +30,21 @@ export default function TaskDetails() {
     }).format(date)
   }
 
-  // GUARD CLAUSE: If task is missing, show the 404 System Alert
+  // --- VIEW 0: 404 SYSTEM ALERT ---
   if (!task) {
     return (
-      <div className='flex flex-col items-center justify-center h-full bg-[#0d0d0d] p-6 text-center'>
+      <div className='flex flex-col items-center justify-center h-full bg-[var(--bg-main)] p-6 text-center'>
         <div className='relative mb-8'>
           <div className='absolute inset-0 bg-red-500/10 blur-2xl animate-pulse' />
-          <div className='text-red-500 text-6xl font-black font-mono tracking-tighter'>
+          <div className='text-red-600 text-6xl font-black font-mono tracking-tighter'>
             404
           </div>
         </div>
         <div className='max-w-md space-y-4'>
-          <h2 className='text-xl font-black text-white uppercase tracking-[0.3em]'>
+          <h2 className='text-xl font-black text-[var(--text-main)] uppercase tracking-[0.3em]'>
             CRITICAL_ERROR: SECTOR_NULL
           </h2>
-          <div className='bg-red-500/5 border-l-2 border-red-500 p-4 font-mono text-[11px] text-red-400/80 leading-relaxed uppercase tracking-wider'>
+          <div className='bg-red-500/5 border-l-2 border-red-600 p-4 font-mono text-[11px] text-red-500 leading-relaxed uppercase tracking-wider'>
             <p>
               [ALERT] Identity sequence "{id?.slice(0, 12)}..." could not be
               located.
@@ -56,7 +56,7 @@ export default function TaskDetails() {
         </div>
         <button
           onClick={() => navigate(-1)}
-          className='mt-12 flex items-center gap-3 px-8 py-3 bg-transparent border border-white/10 text-slate-500 hover:border-red-500 hover:text-red-500 transition-all duration-300 group'
+          className='mt-12 flex items-center gap-3 px-8 py-3 bg-transparent border border-[var(--border-subtle)] text-[var(--text-dim)] hover:border-red-600 hover:text-red-600 transition-all duration-300 group'
         >
           <FontAwesomeIcon
             icon={faArrowLeft}
@@ -74,27 +74,27 @@ export default function TaskDetails() {
   const getStatusTheme = () => {
     if (task.status === 'archived')
       return {
-        color: 'text-yellow-600',
-        border: 'border-yellow-600',
-        bg: 'bg-yellow-600/5',
+        color: 'text-[var(--accent-color)]',
+        border: 'border-[var(--accent-color)]',
+        bg: 'bg-[var(--accent-color)]/5',
         label: 'VAULT_FRAGMENT',
       }
     if (task.status === 'completed')
       return {
-        color: 'text-emerald-500/70',
+        color: 'text-emerald-500',
         border: 'border-emerald-500/50',
         bg: 'bg-emerald-500/5',
         label: 'COMPLETED_PROTOCOL',
       }
     if (task.priority)
       return {
-        color: 'text-orange-500/70',
+        color: 'text-orange-500',
         border: 'border-orange-500/50',
         bg: 'bg-orange-500/5',
         label: 'CRITICAL_THREAD',
       }
     return {
-      color: 'text-blue-500/70',
+      color: 'text-blue-500',
       border: 'border-blue-500/50',
       bg: 'bg-blue-500/5',
       label: 'STANDARD_LOG',
@@ -107,7 +107,7 @@ export default function TaskDetails() {
     <div className='max-w-5xl mx-auto py-12 px-6 h-full overflow-y-auto animate-scan'>
       {/* 1. Header Navigation */}
       <button
-        className='flex items-center gap-2 text-slate-500 hover:text-white transition-colors mb-12 group'
+        className='flex items-center gap-2 text-[var(--text-dim)] hover:text-[var(--text-main)] transition-colors mb-12 group'
         onClick={() => navigate(-1)}
       >
         <FontAwesomeIcon
@@ -124,18 +124,18 @@ export default function TaskDetails() {
 
       {/* 2. The Main Protocol Window */}
       <div
-        className={`bg-[#1e1e1e] border rounded-sm shadow-2xl transition-all duration-500 relative border-white/5`}
+        className={`bg-[var(--bg-task-inner)] border rounded-sm shadow-2xl transition-all duration-500 relative border-[var(--border-subtle)]`}
       >
         {task.status === 'archived' && (
           <>
-            <div className='absolute -top-[1px] -left-[1px] w-4 h-4 border-t-2 border-l-2 border-yellow-600/40' />
-            <div className='absolute -bottom-[1px] -right-[1px] w-4 h-4 border-b-2 border-r-2 border-yellow-600/40' />
+            <div className='absolute -top-[1px] -left-[1px] w-4 h-4 border-t-2 border-l-2 border-[var(--accent-color)]/40' />
+            <div className='absolute -bottom-[1px] -right-[1px] w-4 h-4 border-b-2 border-r-2 border-[var(--accent-color)]/40' />
           </>
         )}
 
         {/* Status Bar */}
         <div
-          className={`p-6 border-b bg-black/50 flex flex-wrap gap-4 items-center justify-between 'border-white/5`}
+          className={`p-6 border-b bg-[var(--bg-sidebar)]/30 flex flex-wrap gap-4 items-center justify-between border-[var(--border-subtle)]`}
         >
           <div className='flex gap-3'>
             <span
@@ -146,8 +146,8 @@ export default function TaskDetails() {
             <span
               className={`px-3 py-1 text-[10px] font-black uppercase tracking-widest border ${
                 task.status === 'archived'
-                  ? 'border-cyan-400/50 text-cyan-400 bg-cyan-400/5'
-                  : 'border-slate-500/50 text-slate-400'
+                  ? 'border-cyan-500/50 text-cyan-500 bg-cyan-500/5'
+                  : 'border-[var(--border-subtle)] text-[var(--text-dim)]'
               }`}
             >
               {task.status === 'archived'
@@ -164,12 +164,9 @@ export default function TaskDetails() {
 
         {/* Content Area */}
         <div className='p-10 relative overflow-hidden'>
-          {task.status === 'archived' && (
-            <div className='absolute inset-0 opacity-[0.03] pointer-events-none bg-[#111]' />
-          )}
           <div className='mb-12 relative z-10'>
             <span
-              className={`text-[10px] font-mono uppercase tracking-[0.3em] mb-4 block ${task.status === 'archived' ? 'text-cyan-600' : 'text-slate-500'}`}
+              className={`text-[10px] font-mono uppercase tracking-[0.3em] mb-4 block ${task.status === 'archived' ? 'text-cyan-600' : 'text-[var(--text-dim)]'}`}
             >
               //{' '}
               {task.status === 'archived'
@@ -177,7 +174,7 @@ export default function TaskDetails() {
                 : 'Protocol_Title'}
             </span>
             <h1
-              className={`text-5xl font-black tracking-tighter leading-none uppercase transition-colors duration-500 ${task.status === 'archived' ? 'text-white' : 'text-slate-100'}`}
+              className={`text-5xl font-black tracking-tighter leading-none uppercase transition-colors duration-500 ${task.status === 'archived' ? 'text-[var(--text-main)]' : 'text-[var(--text-main)]'}`}
             >
               {task.title}
             </h1>
@@ -185,18 +182,16 @@ export default function TaskDetails() {
 
           <div className='space-y-4 relative z-10'>
             <span
-              className={`text-[10px] font-mono uppercase tracking-[0.3em] block ${task.status === 'archived' ? 'text-cyan-600' : 'text-slate-500'}`}
+              className={`text-[10px] font-mono uppercase tracking-[0.3em] block ${task.status === 'archived' ? 'text-cyan-600' : 'text-[var(--text-dim)]'}`}
             >
               //{' '}
               {task.status === 'archived'
                 ? 'Fragment_Parameters'
                 : 'Operational_Parameters'}
             </span>
-            <div
-              className={`bg-black/20 p-8 border-l-2 transition-colors border-white/5'}`}
-            >
+            <div className='bg-[var(--bg-main)]/30 p-8 border-l-2 transition-colors border-[var(--border-subtle)]'>
               <p
-                className={`text-lg leading-relaxed whitespace-pre-wrap font-mono italic transition-colors ${task.status === 'archived' ? 'text-cyan-500/70' : 'text-slate-300'}`}
+                className={`text-lg leading-relaxed whitespace-pre-wrap font-mono italic transition-colors ${task.status === 'archived' ? 'text-cyan-500/70' : 'text-[var(--text-main)]/80'}`}
               >
                 /* {task.description || 'No context provided for this entry.'}{' '}
                 */
@@ -207,10 +202,10 @@ export default function TaskDetails() {
 
         {/* Technical Metadata Footer */}
         <div
-          className={`p-6 bg-black/40 border-t grid grid-cols-1 md:grid-cols-2 gap-8 ${task.status === 'archived' ? 'border-yellow-600/10' : 'border-white/5'}`}
+          className={`p-6 bg-[var(--bg-sidebar)]/50 border-t grid grid-cols-1 md:grid-cols-2 gap-8 ${task.status === 'archived' ? 'border-[var(--accent-color)]/20' : 'border-[var(--border-subtle)]'}`}
         >
           <div className='flex items-start gap-4'>
-            <div className='w-12 h-12 border flex items-center justify-center bg-white/5 transition-colors border-white/10 text-slate-500'>
+            <div className='w-12 h-12 border flex items-center justify-center bg-[var(--text-main)]/5 transition-colors border-[var(--border-subtle)] text-[var(--text-dim)]'>
               <FontAwesomeIcon
                 icon={task.status === 'archived' ? faBoxArchive : faCalendarAlt}
                 className='text-sm'
@@ -225,7 +220,7 @@ export default function TaskDetails() {
                   : 'Init_Timestamp'}
               </p>
               <p
-                className={`text-xs font-black font-mono tracking-widest ${task.status === 'archived' ? 'text-cyan-400' : 'text-white'}`}
+                className={`text-xs font-black font-mono tracking-widest ${task.status === 'archived' ? 'text-cyan-500' : 'text-[var(--text-main)]'}`}
               >
                 '{formatDateTime(task.createdAt)}'
               </p>
@@ -235,13 +230,13 @@ export default function TaskDetails() {
           <div
             className={`flex items-start gap-4 transition-opacity ${task.updatedAt ? 'opacity-100' : 'opacity-20'}`}
           >
-            <div className='w-12 h-12 border flex items-center justify-center bg-white/5 border-white/10 text-slate-500'>
+            <div className='w-12 h-12 border flex items-center justify-center bg-[var(--text-main)]/5 border-[var(--border-subtle)] text-[var(--text-dim)]'>
               <FontAwesomeIcon
                 icon={faSync}
                 className={
                   task.updatedAt
                     ? task.status === 'archived'
-                      ? 'text-cyan-400 text-sm'
+                      ? 'text-cyan-500 text-sm'
                       : theme.color
                     : 'text-sm'
                 }
@@ -256,7 +251,7 @@ export default function TaskDetails() {
                   : 'Last_Sync_Event'}
               </p>
               <p
-                className={`text-xs font-black font-mono tracking-widest ${task.status === 'archived' ? 'text-cyan-400' : 'text-white'}`}
+                className={`text-xs font-black font-mono tracking-widest ${task.status === 'archived' ? 'text-cyan-500' : 'text-[var(--text-main)]'}`}
               >
                 {task.updatedAt
                   ? `'${formatDateTime(task.updatedAt)}'`
