@@ -154,7 +154,7 @@ export default function Sidebar() {
         {/* SECTION: THE VAULT */}
         <div className='pt-8 mt-4 border-t border-[var(--border-subtle)]'>
           <div className='px-3 mb-3'>
-            <p className='text-[9px] font-mono text-cyan-500 tracking-[0.5em] uppercase'>
+            <p className='text-[9px] font-mono text-[var(--accent-secondary)] tracking-[0.5em] uppercase'>
               Deep_Sync_Vault
             </p>
           </div>
@@ -163,8 +163,8 @@ export default function Sidebar() {
             onClick={() => setFilter('archived')}
             className={`flex justify-between items-center p-3 cursor-pointer transition-all group relative border-l-2 ${
               selectedFilter === 'archived'
-                ? 'bg-cyan-950/20 border-cyan-500 text-cyan-400'
-                : 'border-transparent text-[var(--text-dim)] hover:bg-cyan-950/20'
+                ? 'bg-[var(--accent-active-bg)] border-[var(--accent-primary)] text-[var(--accent-primary)]'
+                : 'border-transparent text-[var(--text-dim)] hover:bg-[var(--accent-active-bg)]'
             }`}
           >
             <div className='flex items-center gap-3'>
@@ -172,12 +172,12 @@ export default function Sidebar() {
                 icon={faBoxArchive}
                 className={`w-4 h-4 transition-all duration-300 ${
                   selectedFilter === 'archived'
-                    ? 'text-cyan-400'
-                    : 'text-cyan-900 group-hover:text-cyan-400'
+                    ? 'text-[var(--accent-primary)]'
+                    : 'text-[var(--accent-primary)]/20 group-hover:text-[var(--accent-primary)]'
                 }`}
               />
               <span
-                className={`text-[11px] uppercase tracking-[0.25em] transition-colors ${
+                className={`text-[11px] text-[var(--text-dim)] uppercase tracking-[0.25em] transition-colors ${
                   selectedFilter === 'archived'
                     ? 'text-[var(--text-main)] font-black'
                     : 'group-hover:text-[var(--text-main)] font-bold'
@@ -194,15 +194,16 @@ export default function Sidebar() {
               <span
                 className={`text-[12px] font-mono font-bold transition-colors ${
                   selectedFilter === 'archived'
-                    ? 'text-cyan-400'
-                    : 'text-[var(--text-dim)] group-hover:text-cyan-400'
+                    ? 'text-[var(--accent-primary)]'
+                    : 'text-[var(--text-dim)] group-hover:text-[var(--accent-primary)]'
                 }`}
               >
                 {String(archiveCount).padStart(2, '0')}
               </span>
             </div>
+
             {selectedFilter === 'archived' && (
-              <div className='absolute inset-0 bg-cyan-400/10 animate-pulse pointer-events-none' />
+              <div className='absolute inset-0 bg-[var(--accent-primary)]/10 animate-pulse pointer-events-none' />
             )}
           </div>
         </div>

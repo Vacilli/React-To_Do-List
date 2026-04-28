@@ -19,6 +19,11 @@
   --text-dim: #64748b; /* slate-500 */
   --border-subtle: rgba(255, 255, 255, 0.05);
   --accent-action: #10b981;
+  /* These replace the hardcoded Cyans */
+  --accent-primary: #22d3ee; /* Cyan-400 */
+  --accent-secondary: #0891b2; /* Cyan-600 */
+  --accent-active-bg: rgba(34, 211, 238, 0.1); /* Cyan tint */
+  --glow-color: rgba(34, 211, 238, 0.4); /* Cyan Glow */
 }
 
 [data-theme='light'] {
@@ -31,6 +36,11 @@
   --text-dim: #64748b;
   --border-subtle: #dde1e4;
   --accent-action: #af8700; /* Muted Brass for Light Mode */
+  /* The Gold/Brass Inversion */
+  --accent-primary: #af8700; /* Gold */
+  --accent-secondary: #8a6d00; /* Deep Gold */
+  --accent-active-bg: rgba(175, 135, 0, 0.1); /* Gold tint */
+  --glow-color: rgba(175, 135, 0, 0.3); /* Gold Glow */
 }
 
 /* Prevent layout shift from scrollbar */

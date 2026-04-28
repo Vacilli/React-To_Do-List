@@ -29,7 +29,7 @@ export default function TaskList() {
             `}
           >
             {/* Internal Padding & Layout */}
-            <div className='bg-[var(--bg-task-inner)] p-5 border border-[var(--text-main)]/5'>
+            <div className='bg-[var(--bg-task)] p-5 border border-[var(--text-main)]/5'>
               <Task task={task} />
 
               {/* Status Ribbon - This stays exactly as you wrote it */}
@@ -39,7 +39,7 @@ export default function TaskList() {
                   text-[9px] font-mono font-black uppercase px-2 py-1 tracking-widest transition-all duration-300
                   ${
                     task.status === 'archived'
-                      ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30'
+                      ? 'bg-[var(--accent-secondary)]/10 text-[var(--accent-primary)] border border-[var(--accent-secondary)]/30'
                       : task.status === 'completed'
                         ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20'
                         : task.priority

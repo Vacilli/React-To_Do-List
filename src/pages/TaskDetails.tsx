@@ -74,9 +74,9 @@ export default function TaskDetails() {
   const getStatusTheme = () => {
     if (task.status === 'archived')
       return {
-        color: 'text-[var(--accent-color)]',
-        border: 'border-[var(--accent-color)]',
-        bg: 'bg-[var(--accent-color)]/5',
+        color: 'text-[var(--accent-secondary)]',
+        border: 'border-[var(--accent-secondary)]/50',
+        bg: 'bg-[var(--accent-secondary)]/5',
         label: 'VAULT_FRAGMENT',
       }
     if (task.status === 'completed')
@@ -128,8 +128,8 @@ export default function TaskDetails() {
       >
         {task.status === 'archived' && (
           <>
-            <div className='absolute -top-[1px] -left-[1px] w-4 h-4 border-t-2 border-l-2 border-[var(--accent-color)]/40' />
-            <div className='absolute -bottom-[1px] -right-[1px] w-4 h-4 border-b-2 border-r-2 border-[var(--accent-color)]/40' />
+            <div className='absolute -top-[1px] -left-[1px] w-4 h-4 border-t-2 border-l-2 border-[var(--accent-secondary)]/40' />
+            <div className='absolute -bottom-[1px] -right-[1px] w-4 h-4 border-b-2 border-r-2 border-[var(--accent-secondary)]/40' />
           </>
         )}
 
@@ -146,7 +146,7 @@ export default function TaskDetails() {
             <span
               className={`px-3 py-1 text-[10px] font-black uppercase tracking-widest border ${
                 task.status === 'archived'
-                  ? 'border-cyan-500/50 text-cyan-500 bg-cyan-500/5'
+                  ? 'border-[var(--accent-secondary)]/50 text-[var(--accent-secondary)] bg-[var(--accent-secondary)]/5'
                   : 'border-[var(--border-subtle)] text-[var(--text-dim)]'
               }`}
             >
@@ -166,7 +166,7 @@ export default function TaskDetails() {
         <div className='p-10 relative overflow-hidden'>
           <div className='mb-12 relative z-10'>
             <span
-              className={`text-[10px] font-mono uppercase tracking-[0.3em] mb-4 block ${task.status === 'archived' ? 'text-cyan-600' : 'text-[var(--text-dim)]'}`}
+              className={`text-[10px] font-mono uppercase tracking-[0.3em] mb-4 block ${task.status === 'archived' ? 'text-[var(--accent-secondary)]' : 'text-[var(--text-dim)]'}`}
             >
               //{' '}
               {task.status === 'archived'
@@ -182,7 +182,7 @@ export default function TaskDetails() {
 
           <div className='space-y-4 relative z-10'>
             <span
-              className={`text-[10px] font-mono uppercase tracking-[0.3em] block ${task.status === 'archived' ? 'text-cyan-600' : 'text-[var(--text-dim)]'}`}
+              className={`text-[10px] font-mono uppercase tracking-[0.3em] block ${task.status === 'archived' ? 'text-[var(--accent-secondary)]' : 'text-[var(--text-dim)]'}`}
             >
               //{' '}
               {task.status === 'archived'
@@ -191,7 +191,7 @@ export default function TaskDetails() {
             </span>
             <div className='bg-[var(--bg-main)]/30 p-8 border-l-2 transition-colors border-[var(--border-subtle)]'>
               <p
-                className={`text-lg leading-relaxed whitespace-pre-wrap font-mono italic transition-colors ${task.status === 'archived' ? 'text-cyan-500/70' : 'text-[var(--text-main)]/80'}`}
+                className={`text-lg leading-relaxed whitespace-pre-wrap font-mono italic transition-colors text-[var(--text-main)]/80`}
               >
                 /* {task.description || 'No context provided for this entry.'}{' '}
                 */
@@ -202,7 +202,7 @@ export default function TaskDetails() {
 
         {/* Technical Metadata Footer */}
         <div
-          className={`p-6 bg-[var(--bg-sidebar)]/50 border-t grid grid-cols-1 md:grid-cols-2 gap-8 ${task.status === 'archived' ? 'border-[var(--accent-color)]/20' : 'border-[var(--border-subtle)]'}`}
+          className={`p-6 bg-[var(--bg-sidebar)]/50 border-t grid grid-cols-1 md:grid-cols-2 gap-8 border-[var(--border-subtle)]`}
         >
           <div className='flex items-start gap-4'>
             <div className='w-12 h-12 border flex items-center justify-center bg-[var(--text-main)]/5 transition-colors border-[var(--border-subtle)] text-[var(--text-dim)]'>
@@ -220,7 +220,7 @@ export default function TaskDetails() {
                   : 'Init_Timestamp'}
               </p>
               <p
-                className={`text-xs font-black font-mono tracking-widest ${task.status === 'archived' ? 'text-cyan-500' : 'text-[var(--text-main)]'}`}
+                className={`text-xs font-black font-mono tracking-widest text-[var(--text-main)]`}
               >
                 '{formatDateTime(task.createdAt)}'
               </p>
@@ -236,7 +236,7 @@ export default function TaskDetails() {
                 className={
                   task.updatedAt
                     ? task.status === 'archived'
-                      ? 'text-cyan-500 text-sm'
+                      ? 'text-[var(--accent-secondary)] text-sm'
                       : theme.color
                     : 'text-sm'
                 }
@@ -251,7 +251,7 @@ export default function TaskDetails() {
                   : 'Last_Sync_Event'}
               </p>
               <p
-                className={`text-xs font-black font-mono tracking-widest ${task.status === 'archived' ? 'text-cyan-500' : 'text-[var(--text-main)]'}`}
+                className={`text-xs font-black font-mono tracking-widesttext-[var(--text-main)]`}
               >
                 {task.updatedAt
                   ? `'${formatDateTime(task.updatedAt)}'`

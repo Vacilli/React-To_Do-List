@@ -57,6 +57,8 @@ export default function Header() {
     setEditingTask,
   } = useTasks()
 
+  const showNotifications = false
+
   const location = useLocation()
   const navigate = useNavigate()
   const taskId = location.pathname.split('/').pop() || '000000'
@@ -172,13 +174,15 @@ export default function Header() {
           <FontAwesomeIcon icon={faPlus} className='text-[8px]' />
           <span>Initialize_Entry</span>
         </button>
-        <button className='text-[var(--text-dim)] hover:text-[var(--text-main)] transition-colors relative'>
-          <FontAwesomeIcon icon={faBell} className='text-lg' />
-          <span className='absolute -top-1 -right-1 flex h-2 w-2'>
-            <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75'></span>
-            <span className='relative inline-flex rounded-full h-2 w-2 bg-orange-500'></span>
-          </span>
-        </button>
+        {showNotifications && (
+          <button className='text-[var(--text-dim)] hover:text-[var(--text-main)] transition-colors relative'>
+            <FontAwesomeIcon icon={faBell} className='text-lg' />
+            <span className='absolute -top-1 -right-1 flex h-2 w-2'>
+              <span className='animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75'></span>
+              <span className='relative inline-flex rounded-full h-2 w-2 bg-orange-500'></span>
+            </span>
+          </button>
+        )}
       </div>
     </header>
   )

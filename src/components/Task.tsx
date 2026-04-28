@@ -21,13 +21,14 @@ export default function Task({ task }: TaskProps) {
   }
 
   const syntaxColors = {
+    // Use a variable or a specific hex to avoid the "red" bleed in dark mode
     priority:
-      'text-orange-400 border-orange-500/30 group-hover:border-orange-500',
-    ongoing: 'text-blue-400 border-blue-500/30 group-hover:border-blue-500',
+      'text-orange-400 border-orange-500/40 group-hover:border-orange-500',
+    ongoing: 'text-blue-400 border-blue-500/40 group-hover:border-blue-500',
     completed:
-      'text-emerald-400 border-emerald-500/30 group-hover:border-emerald-500',
+      'text-[var(--accent-action)] border-[var(--accent-action)]/30 group-hover:border-[var(--accent-action)]',
     archived:
-      'text-cyan-400 border-cyan-800/50 group-hover:border-[var(--accent-color)]',
+      'text-[var(--accent-primary)] border-[var(--accent-primary)]/30 group-hover:border-[var(--accent-primary)]',
   }
 
   const currentSyntax =
@@ -89,7 +90,7 @@ export default function Task({ task }: TaskProps) {
               timestamp:
             </span>
             <span
-              className={`text-[10px] font-mono font-bold ${isArchived ? 'text-cyan-600' : 'text-emerald-500'}`}
+              className={`text-[10px] font-mono font-bold ${isArchived ? 'text-[var(--accent-secondary)]' : 'text-emerald-500'}`}
             >
               '{formatDate(task.createdAt)}'
             </span>
@@ -106,7 +107,7 @@ export default function Task({ task }: TaskProps) {
             to={`/task/${task.id}`}
             className={`text-[9px] font-black uppercase tracking-widest px-4 py-2 border transition-all duration-300 ${
               isArchived
-                ? 'border-cyan-900 text-cyan-900 group-hover:border-cyan-400 group-hover:text-cyan-400 group-hover:shadow-[0_0_15px_rgba(34,211,238,0.2)]'
+                ? 'border-[var(--accent-secondary)] text-[var(--accent-secondary)] group-hover:border-[var(--accent-primary)] group-hover:text-[var(--accent-primary)] group-hover:drop-shadow-[0_0_8px_var(--glow-color)]'
                 : `${currentSyntax} hover:bg-[var(--text-main)]/5`
             }`}
           >
@@ -120,8 +121,7 @@ export default function Task({ task }: TaskProps) {
   // --- 2. GRID VIEW LOGIC ---
   return (
     <article
-      className={`group relative p-5 transition-all duration-200 shadow-2xl
-        ${isArchived ? 'bg-[var(--bg-task-inner)] border border-cyan-900/30' : 'bg-[var(--bg-task-inner)] border border-[var(--border-subtle)]'} 
+      className={`group relative p-5 transition-all duration-200 shadow-sm bg-[var(--bg-task-inner)] border border-[var(--border-subtle)]
         ${task.status === 'completed' ? 'opacity-50' : 'opacity-100'}`}
     >
       {/* HUD Brackets */}
@@ -143,7 +143,7 @@ export default function Task({ task }: TaskProps) {
           <div className='flex flex-col flex-grow'>
             <span
               className={`text-[9px] font-mono font-bold uppercase tracking-[0.2em] mb-1 
-              ${isArchived ? 'text-[var(--accent-color)]/50 group-hover:text-[var(--accent-color)]' : currentSyntax.split(' ')[0]}`}
+              ${isArchived ? 'text-[var(--accent-secondary)]/50 group-hover:text-[var(--accent-secondary)]' : currentSyntax.split(' ')[0]}`}
             >
               {isArchived
                 ? '[V]'
@@ -162,7 +162,7 @@ export default function Task({ task }: TaskProps) {
             </span>
             <h2
               className={`text-base font-black tracking-tight uppercase transition-colors min-h-[3rem] flex items-center
-              ${isArchived ? 'text-cyan-100/90 group-hover:text-[var(--text-main)]' : 'text-[var(--text-main)]'} 
+              ${isArchived ? 'text-[var(--text-main)]/50 group-hover:text-[var(--text-main)]' : 'text-[var(--text-main)]'} 
               ${task.status === 'completed' ? 'line-through decoration-[var(--text-dim)]' : ''}`}
             >
               {task.title}
@@ -170,14 +170,14 @@ export default function Task({ task }: TaskProps) {
           </div>
 
           <span
-            className={`text-[9px] font-mono transition-colors ${isArchived ? 'text-cyan-800' : 'text-[var(--text-dim)]/50 group-hover:text-[var(--text-dim)]'}`}
+            className={`text-[9px] font-mono transition-colors text-[var(--text-dim)]/50 group-hover:text-[var(--text-dim)]`}
           >
             0x{String(task.id).slice(0, 4).toUpperCase()}
           </span>
         </div>
 
         <p
-          className={`text-md leading-5 line-clamp-2 font-mono italic transition-colors flex-grow min-h-[40px] ${isArchived ? 'text-cyan-900 group-hover:text-cyan-400' : 'text-[var(--text-dim)]'}`}
+          className={`text-md leading-5 line-clamp-2 font-mono italic transition-colors flex-grow min-h-[40px] ${isArchived ? 'text-[var(--text-dim)] group-hover:text-[var(--accent-primary)]' : 'text-[var(--text-dim)]'}`}
         >
           /* {task.description || 'no_context_provided'} */
         </p>
@@ -185,12 +185,12 @@ export default function Task({ task }: TaskProps) {
         <div className='flex items-center gap-4 pt-2'>
           <div className='flex flex-col opacity-60 group-hover:opacity-100 transition-opacity'>
             <span
-              className={`text-[10px] font-mono uppercase tracking-tighter ${isArchived ? 'text-[var(--accent-color)]' : 'text-[var(--text-main)]'}`}
+              className={`text-[10px] font-mono uppercase tracking-tighter ${isArchived ? 'text-[var(--text-main)]' : 'text-[var(--text-main)]'}`}
             >
               const timestamp =
             </span>
             <p
-              className={`text-[11px] font-mono font-bold uppercase ${isArchived ? 'text-cyan-600 group-hover:text-cyan-400' : 'text-emerald-500'}`}
+              className={`text-[11px] font-mono font-bold uppercase ${isArchived ? 'text-[var(--accent-secondary)] group-hover:text-[var(--accent-primary)]' : 'text-emerald-500'}`}
             >
               '{formatDate(task.createdAt)}'
             </p>
@@ -200,7 +200,7 @@ export default function Task({ task }: TaskProps) {
             to={`/task/${task.id}`}
             className={`ml-auto text-[9px] font-black uppercase tracking-widest px-3 py-1.5 border transition-all ${
               isArchived
-                ? 'border-cyan-900 text-cyan-900 group-hover:border-cyan-400 group-hover:text-cyan-400 group-hover:shadow-[0_0_10px_rgba(34,211,238,0.3)]'
+                ? 'border-[var(--accent-secondary)] text-[var(--accent-secondary)] group-hover:border-[var(--accent-primary)] group-hover:text-[var(--accent-primary)] group-hover:drop-shadow-[0_0_8px_var(--glow-color)]'
                 : currentSyntax
             }`}
           >
@@ -210,7 +210,7 @@ export default function Task({ task }: TaskProps) {
       </div>
 
       <div
-        className={`mt-5 pt-4 border-t flex justify-end ${isArchived ? 'border-cyan-900/20' : 'border-[var(--border-subtle)]'}`}
+        className={`mt-5 pt-4 border-t flex justify-end border-[var(--border-subtle)]`}
       >
         <EditOrDeleteTask task={task} />
       </div>
