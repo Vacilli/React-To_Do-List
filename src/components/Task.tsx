@@ -111,7 +111,7 @@ export default function Task({ task }: TaskProps) {
                 : `${currentSyntax} hover:bg-[var(--text-main)]/5`
             }`}
           >
-            {isArchived ? 'DECRYPT_LOG' : 'DEBUG_LOG'}
+            'DEBUG_LOG'
           </Link>
         </div>
       </div>
@@ -121,7 +121,7 @@ export default function Task({ task }: TaskProps) {
   // --- 2. GRID VIEW LOGIC ---
   return (
     <article
-      className={`group relative p-5 transition-all duration-200 shadow-sm bg-[var(--bg-task-inner)] border border-[var(--border-subtle)]
+      className={`group relative p-5 transition-all duration-200 shadow-[var(--shadow-codex)] bg-[var(--bg-task-inner)] border border-[var(--border-subtle)]
         ${task.status === 'completed' ? 'opacity-50' : 'opacity-100'}`}
     >
       {/* HUD Brackets */}
@@ -190,7 +190,7 @@ export default function Task({ task }: TaskProps) {
               const timestamp =
             </span>
             <p
-              className={`text-[11px] font-mono font-bold uppercase ${isArchived ? 'text-[var(--accent-secondary)] group-hover:text-[var(--accent-primary)]' : 'text-emerald-500'}`}
+              className={`text-[11px] font-mono font-bold uppercase text-emerald-500`}
             >
               '{formatDate(task.createdAt)}'
             </p>
@@ -204,7 +204,7 @@ export default function Task({ task }: TaskProps) {
                 : currentSyntax
             }`}
           >
-            {isArchived ? 'DECRYPT_LOG' : 'DEBUG_LOG'}
+            'DEBUG_LOG'
           </Link>
         </div>
       </div>

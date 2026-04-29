@@ -27,24 +27,17 @@ export default function Sidebar() {
   }
 
   const handleFilterClick = (id: TaskFilter) => {
-    // 3. Check if we are currently on a Task Detail route
     const isDetailView = location.pathname.startsWith('/task/')
 
     if (isDetailView) {
-      // FORCE HOME FIRST: Kill the component before the data changes
-      navigate('/')
+      navigate('/', { replace: true })
+    }
 
-      // Delay the filter/state update slightly to ensure
-      // the TaskDetails component has unmounted.
-      setTimeout(() => {
-        setEditingTask(null)
-        setFilter(id)
-      }, 0)
-    } else {
-      // NORMAL FLOW: Stay on home, just change the list
+    // queueMicrotask ensures this happens AFTER the navigate call is processed
+    queueMicrotask(() => {
       setEditingTask(null)
       setFilter(id)
-    }
+    })
   }
 
   const priorityCount = allTasks.filter((t) => t.priority).length
@@ -237,7 +230,7 @@ export default function Sidebar() {
       <div className='mt-auto pt-6'>
         <button
           onClick={handleNewTaskClick}
-          className='flex items-center justify-center gap-3 w-full bg-[var(--text-main)] text-[var(--bg-sidebar)] hover:bg-[var(--accent-action)] hover:text-white font-black text-[11px] uppercase tracking-[0.3em] py-4 transition-all active:scale-[0.98] shadow-md shadow-black/20'
+          className='flex items-center justify-center gap-3 w-full bg-[var(--text-main)] text-[var(--bg-sidebar)] hover:bg-[var(--accent-action)] hover:text-white font-black text-[11px] uppercase tracking-[0.3em] py-4 transition-all active:scale-[0.98] shadow-[var(--shadow-codex)] shadow-black/20'
         >
           <FontAwesomeIcon icon={faPlus} className='text-[10px]' />
           <span>Initialize_Entry</span>

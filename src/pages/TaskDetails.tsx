@@ -83,7 +83,7 @@ export default function TaskDetails() {
   const getStatusTheme = () => {
     if (task.status === 'archived')
       return {
-        color: 'text-[var(--accent-secondary)]',
+        color: 'text-[var(--accent-primary)]',
         border: 'border-[var(--accent-secondary)]/50',
         bg: 'bg-[var(--accent-secondary)]/5',
         label: 'VAULT_FRAGMENT',
@@ -155,7 +155,7 @@ export default function TaskDetails() {
             <span
               className={`px-3 py-1 text-[10px] font-black uppercase tracking-widest border ${
                 task.status === 'archived'
-                  ? 'border-[var(--accent-secondary)]/50 text-[var(--accent-secondary)] bg-[var(--accent-secondary)]/5'
+                  ? 'border-[var(--accent-secondary)]/50 text-[var(--accent-primary)] bg-[var(--accent-secondary)]/5'
                   : 'border-[var(--border-subtle)] text-[var(--text-dim)]'
               }`}
             >

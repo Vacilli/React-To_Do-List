@@ -21,7 +21,7 @@ export type TaskFilter =
   | 'priority'
   | 'completed'
   | 'archived'
-export type ViewMode = 'grid' | 'list'
+export type viewMode = 'grid' | 'list'
 
 export type TaskItem = {
   title: string
@@ -57,8 +57,8 @@ type TasksContextType = {
   isPanelOpen: boolean
   openPanel: () => void
   closePanel: () => void
-  viewMode: ViewMode
-  setViewMode: (mode: ViewMode) => void
+  viewMode: viewMode
+  setviewMode: (mode: viewMode) => void
 }
 
 type Action =
@@ -70,13 +70,13 @@ type Action =
   | { type: 'task/setEditing'; payload: TaskItem | null }
   /* This controls the lens (Filter) we are looking through */
   | { type: 'task/setFilter'; payload: TaskFilter }
-  | { type: 'task/setViewMode'; payload: ViewMode }
+  | { type: 'task/setviewMode'; payload: viewMode }
 
 type State = {
   allTasks: TaskItem[]
   editingTask: TaskItem | null
   selectedFilter: TaskFilter // Changed from selectedStatus to use our new Filter type
-  viewMode: ViewMode
+  viewMode: viewMode
 }
 
 const initialState: State = {
@@ -127,7 +127,7 @@ function reducer(state: State, action: Action): State {
     case 'task/setFilter':
       return { ...state, selectedFilter: action.payload }
 
-    case 'task/setViewMode':
+    case 'task/setviewMode':
       return { ...state, viewMode: action.payload }
 
     default:
@@ -137,7 +137,7 @@ function reducer(state: State, action: Action): State {
 
 function init(initialState: State): State {
   const savedTasks = localStorage.getItem('tasks')
-  const savedView = localStorage.getItem('ViewMode')
+  const savedView = localStorage.getItem('viewMode')
 
   // 1. Prepare our hydrated state with defaults
   const hydratedState = { ...initialState }
@@ -155,7 +155,7 @@ function init(initialState: State): State {
     hydratedState.allTasks = []
   }
 
-  // 3. Handle ViewMode Hydration (The "Pimp My Resume" logic)
+  // 3. Handle viewMode Hydration (The "Pimp My Resume" logic)
   if (savedView === 'grid' || savedView === 'list') {
     hydratedState.viewMode = savedView
   } else {
@@ -272,9 +272,9 @@ function TasksProvider({ children }: TasksProviderProps) {
     setSelectedFilter(filter)
   }
 
-  const setViewMode = (mode: ViewMode) => {
+  const setviewMode = (mode: viewMode) => {
     // 1. Update the state
-    dispatch({ type: 'task/setViewMode', payload: mode })
+    dispatch({ type: 'task/setviewMode', payload: mode })
     // 2. Persist to localStorage (So it stays set on refresh)
     localStorage.setItem('viewMode', mode)
   }
@@ -310,7 +310,7 @@ function TasksProvider({ children }: TasksProviderProps) {
         openPanel,
         closePanel,
         viewMode,
-        setViewMode,
+        setviewMode,
       }}
     >
       {children}

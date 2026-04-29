@@ -93,9 +93,7 @@ export default function EditOrDeleteTask({ task }: { task: TaskItem }) {
       {/* DELETE - Purge from Codex */}
       <button
         onClick={() => deleteTask(task.id)}
-        className={`${btnBase} text-[var(--text-dim)] hover:text-red-500 hover:border-red-500/50 ${
-          task.status === 'archived' ? 'border-red-900/50 text-red-900' : ''
-        }`}
+        className={`${btnBase} text-[var(--text-dim)] hover:text-red-500 hover:border-red-500/50`}
       >
         <FontAwesomeIcon icon={faTrash} className='w-3.5 h-3.5' />
       </button>

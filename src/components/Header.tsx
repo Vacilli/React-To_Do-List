@@ -169,7 +169,7 @@ export default function Header() {
       <div className='w-[20%] flex items-center justify-end gap-6'>
         <button
           onClick={handleNewEntry}
-          className='flex items-center gap-2 bg-[var(--text-main)] text-[var(--bg-sidebar)] hover:bg-[var(--accent-action)] hover:text-white font-black text-[10px] uppercase tracking-[0.2em] py-2.5 px-5 transition-all shadow-sm'
+          className='flex items-center gap-2 bg-[var(--text-main)] text-[var(--bg-sidebar)] hover:bg-[var(--accent-action)] hover:text-white font-black text-[10px] uppercase tracking-[0.2em] py-2.5 px-5 transition-all shadow-[var(--shadow-codex)]'
         >
           <FontAwesomeIcon icon={faPlus} className='text-[8px]' />
           <span>Initialize_Entry</span>

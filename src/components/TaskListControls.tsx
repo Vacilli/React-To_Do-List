@@ -9,7 +9,7 @@ import {
 import { useTasks, SortOption } from '../contexts/TasksContext'
 
 export default function TaskListControls() {
-  const { tasks, sortBy, setBy, viewMode, setViewMode } = useTasks()
+  const { tasks, sortBy, setBy, viewMode, setviewMode } = useTasks()
   const [isSortOpen, setIsSortOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
   const totalTasks = tasks.length
@@ -122,7 +122,7 @@ export default function TaskListControls() {
         {/* DISPLAY MODE */}
         <div className='flex bg-[var(--bg-sidebar)] p-1 border border-[var(--border-subtle)] shrink-0 w-[86px]'>
           <button
-            onClick={() => setViewMode('grid')}
+            onClick={() => setviewMode('grid')}
             className={`p-1.5 px-3 border transition-all ${
               viewMode === 'grid'
                 ? 'bg-[var(--text-main)]/[0.1] text-[var(--text-main)] border-[var(--border-subtle)]'
@@ -134,7 +134,7 @@ export default function TaskListControls() {
           </button>
 
           <button
-            onClick={() => setViewMode('list')}
+            onClick={() => setviewMode('list')}
             className={`p-1.5 px-3 border transition-all ${
               viewMode === 'list'
                 ? 'bg-[var(--text-main)]/[0.1] text-[var(--text-main)] border-[var(--border-subtle)]'
