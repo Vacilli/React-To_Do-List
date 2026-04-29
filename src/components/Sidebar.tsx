@@ -12,15 +12,39 @@ import {
   IconDefinition,
   faBoxArchive,
 } from '@fortawesome/free-solid-svg-icons'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 export default function Sidebar() {
   const { allTasks, setEditingTask, selectedFilter, setFilter, openPanel } =
     useTasks()
   const { theme, toggleTheme } = useTheme()
+  const navigate = useNavigate()
+  const location = useLocation() // 2. Grab current path
 
   const handleNewTaskClick = () => {
     setEditingTask(null)
     openPanel()
+  }
+
+  const handleFilterClick = (id: TaskFilter) => {
+    // 3. Check if we are currently on a Task Detail route
+    const isDetailView = location.pathname.startsWith('/task/')
+
+    if (isDetailView) {
+      // FORCE HOME FIRST: Kill the component before the data changes
+      navigate('/')
+
+      // Delay the filter/state update slightly to ensure
+      // the TaskDetails component has unmounted.
+      setTimeout(() => {
+        setEditingTask(null)
+        setFilter(id)
+      }, 0)
+    } else {
+      // NORMAL FLOW: Stay on home, just change the list
+      setEditingTask(null)
+      setFilter(id)
+    }
   }
 
   const priorityCount = allTasks.filter((t) => t.priority).length
@@ -103,7 +127,7 @@ export default function Sidebar() {
         {navItems.map((item) => (
           <div
             key={item.id}
-            onClick={() => setFilter(item.id)}
+            onClick={() => handleFilterClick(item.id)}
             className={`flex justify-between items-center p-3 cursor-pointer transition-all group relative border-l-2 ${
               selectedFilter === item.id
                 ? 'bg-[var(--text-main)]/10 border-[var(--text-main)] text-[var(--text-main)]'
@@ -160,7 +184,7 @@ export default function Sidebar() {
           </div>
 
           <div
-            onClick={() => setFilter('archived')}
+            onClick={() => handleFilterClick('archived')}
             className={`flex justify-between items-center p-3 cursor-pointer transition-all group relative border-l-2 ${
               selectedFilter === 'archived'
                 ? 'bg-[var(--accent-active-bg)] border-[var(--accent-primary)] text-[var(--accent-primary)]'
@@ -213,14 +237,14 @@ export default function Sidebar() {
       <div className='mt-auto pt-6'>
         <button
           onClick={handleNewTaskClick}
-          className='flex items-center justify-center gap-3 w-full bg-[var(--text-main)] text-[var(--bg-sidebar)] hover:bg-[var(--accent-action)] hover:text-white font-black text-[11px] uppercase tracking-[0.3em] py-4 transition-all active:scale-[0.98] shadow-lg shadow-black/20'
+          className='flex items-center justify-center gap-3 w-full bg-[var(--text-main)] text-[var(--bg-sidebar)] hover:bg-[var(--accent-action)] hover:text-white font-black text-[11px] uppercase tracking-[0.3em] py-4 transition-all active:scale-[0.98] shadow-md shadow-black/20'
         >
           <FontAwesomeIcon icon={faPlus} className='text-[10px]' />
           <span>Initialize_Entry</span>
         </button>
 
         <p className='text-[8px] font-mono text-[var(--text-dim)] my-4 text-center uppercase tracking-widest opacity-50'>
-          System_Status_Stable // V.2.0.4
+          System_Status_Stable // V.1.0.2
         </p>
       </div>
       <div className='p-0 border-t border-[var(--border-subtle)] pt-4'>

@@ -34,12 +34,15 @@ export default function AppLayout() {
 
   return (
     <div className='flex h-screen w-full bg-[var(--bg-main)] overflow-hidden transition-colors duration-500'>
+      {/* 1. LAYER ZERO: The Loader (Fixed/Absolute to take over everything) */}
       {isLoading && <Loader />}
 
+      {/* 2. LAYER ONE: The Sidebar */}
       <div className='w-1/3 max-w-[300px] h-full'>
         <Sidebar />
       </div>
 
+      {/* 3. LAYER TWO: The Content Area */}
       <div className='flex-1 flex bg-[var(--bg-main)] flex-col relative overflow-hidden transition-colors duration-500'>
         <Header />
 

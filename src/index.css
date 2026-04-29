@@ -43,12 +43,6 @@
   --glow-color: rgba(175, 135, 0, 0.3); /* Gold Glow */
 }
 
-/* Prevent layout shift from scrollbar */
-html {
-  overflow-y: scroll;
-  scrollbar-gutter: stable;
-}
-
 /* Ensure the container height doesn't collapse during view switch */
 .infinite-scroll-container {
   min-height: 100vh;

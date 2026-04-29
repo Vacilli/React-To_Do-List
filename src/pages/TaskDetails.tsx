@@ -11,9 +11,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 export default function TaskDetails() {
   const { id } = useParams()
-  const { tasks } = useTasks()
+  const { allTasks } = useTasks()
   const navigate = useNavigate()
-  const task = tasks.find((t) => t.id === id)
+  const task = allTasks.find((t) => t.id === id)
 
   useSystemEscape('/')
 
@@ -33,18 +33,26 @@ export default function TaskDetails() {
   // --- VIEW 0: 404 SYSTEM ALERT ---
   if (!task) {
     return (
-      <div className='flex flex-col items-center justify-center h-full bg-[var(--bg-main)] p-6 text-center'>
+      <div className='absolute inset-0 flex flex-col items-center justify-center bg-[var(--bg-main)] text-center z-[50]'>
+        {/* 'absolute inset-0' is the key here. 
+         It tells the component to fill its parent container 
+         EXACTLY, ignoring external padding and preventing 
+         the extra 100vh height jump.
+      */}
+
         <div className='relative mb-8'>
           <div className='absolute inset-0 bg-red-500/10 blur-2xl animate-pulse' />
           <div className='text-red-600 text-6xl font-black font-mono tracking-tighter'>
             404
           </div>
         </div>
-        <div className='max-w-md space-y-4'>
+
+        <div className='max-w-md space-y-4 px-6'>
           <h2 className='text-xl font-black text-[var(--text-main)] uppercase tracking-[0.3em]'>
             CRITICAL_ERROR: SECTOR_NULL
           </h2>
-          <div className='bg-red-500/5 border-l-2 border-red-600 p-4 font-mono text-[11px] text-red-500 leading-relaxed uppercase tracking-wider'>
+
+          <div className='bg-red-500/5 border-l-2 border-red-600 p-4 font-mono text-[11px] text-red-500 leading-relaxed uppercase tracking-wider text-left'>
             <p>
               [ALERT] Identity sequence "{id?.slice(0, 12)}..." could not be
               located.
@@ -54,8 +62,9 @@ export default function TaskDetails() {
             </p>
           </div>
         </div>
+
         <button
-          onClick={() => navigate(-1)}
+          onClick={() => navigate('/')}
           className='mt-12 flex items-center gap-3 px-8 py-3 bg-transparent border border-[var(--border-subtle)] text-[var(--text-dim)] hover:border-red-600 hover:text-red-600 transition-all duration-300 group'
         >
           <FontAwesomeIcon
