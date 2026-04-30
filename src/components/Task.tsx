@@ -143,7 +143,7 @@ export default function Task({ task }: TaskProps) {
           <div className='flex flex-col flex-grow'>
             <span
               className={`text-[9px] font-mono font-bold uppercase tracking-[0.2em] mb-1 
-              ${isArchived ? 'text-[var(--accent-secondary)]/50 group-hover:text-[var(--accent-secondary)]' : currentSyntax.split(' ')[0]}`}
+              ${isArchived ? 'text-[var(--accent-primary)]/50 group-hover:text-[var(--accent-primary)]' : currentSyntax.split(' ')[0]}`}
             >
               {isArchived
                 ? '[V]'
@@ -177,7 +177,7 @@ export default function Task({ task }: TaskProps) {
         </div>
 
         <p
-          className={`text-md leading-5 line-clamp-2 font-mono italic transition-colors flex-grow min-h-[40px] ${isArchived ? 'text-[var(--text-dim)] group-hover:text-[var(--accent-primary)]' : 'text-[var(--text-dim)]'}`}
+          className={`text-md leading-5 line-clamp-2 font-mono italic transition-colors flex-grow min-h-[40px] text-[var(--text-dim)]`}
         >
           /* {task.description || 'no_context_provided'} */
         </p>
@@ -185,9 +185,13 @@ export default function Task({ task }: TaskProps) {
         <div className='flex items-center gap-4 pt-2'>
           <div className='flex flex-col opacity-60 group-hover:opacity-100 transition-opacity'>
             <span
-              className={`text-[10px] font-mono uppercase tracking-tighter ${isArchived ? 'text-[var(--text-main)]' : 'text-[var(--text-main)]'}`}
+              className={`text-[10px] font-mono tracking-tighter text-[var(--codex-IDE-primary)]`}
             >
-              const timestamp =
+              <span className='text-[var(--codex-IDE-secondary)]'>const</span>{' '}
+              <span className='text-[var(--codex-IDE-identifier)]'>
+                timestamp
+              </span>{' '}
+              <span className='text-[var(--codex-IDE-secondary)]'>=</span>
             </span>
             <p
               className={`text-[11px] font-mono font-bold uppercase text-emerald-500`}

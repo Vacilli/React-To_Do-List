@@ -20,6 +20,10 @@
   --border-subtle: rgba(255, 255, 255, 0.05);
   --accent-action: #10b981;
   --shadow-codex: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --codex-IDE-primary: #bb77eb;
+  --codex-IDE-secondary: #e05582;
+  --codex-IDE-identifier: #51a2ff;
+  --codex-IDE-value: #10b981;
   /* These replace the hardcoded Cyans */
   --accent-primary: #22d3ee; /* Cyan-400 */
   --accent-secondary: #0891b2; /* Cyan-600 */
@@ -38,6 +42,10 @@
   --border-subtle: rgba(0, 0, 0, 0.05);
   --accent-action: #af8700; /* Muted Brass for Light Mode */
   --shadow-codex: 0 6px 20px rgba(0, 0, 0, 0.04);
+  --codex-IDE-primary: #7c3aed;
+  --codex-IDE-secondary: #be123c;
+  --codex-IDE-identifier: #1e40af;
+  --codex-IDE-value: #059669;
   /* The Gold/Brass Inversion */
   --accent-primary: #af8700; /* Gold */
   --accent-secondary: #8a6d00; /* Deep Gold */

@@ -153,22 +153,23 @@ export default function TaskDetails() {
               {theme.label}
             </span>
             <span
-              className={`px-3 py-1 text-[10px] font-black uppercase tracking-widest border ${
-                task.status === 'archived'
-                  ? 'border-[var(--accent-secondary)]/50 text-[var(--accent-primary)] bg-[var(--accent-secondary)]/5'
-                  : 'border-[var(--border-subtle)] text-[var(--text-dim)]'
-              }`}
+              className={`px-3 py-1 text-[10px] font-black uppercase tracking-widest border border-[var(--codex-IDE-value)] text-[var(--codex-IDE-value)]`}
             >
               {task.status === 'archived'
                 ? 'DEEP_SYNC_ACTIVE'
                 : 'PROCESS_ACTIVE'}
             </span>
           </div>
-          <span
-            className={`text-[9px] font-mono transition-colors duration-500 ${theme.color}`}
-          >
-            UID: {task.id.toUpperCase()}
-          </span>
+          <div className='flex flex-col opacity-60 group-hover:opacity-100 transition-opacity leading-none mt-1'>
+            <span className='text-[10px] font-medium tracking-tighter'>
+              <span className='text-[var(--codex-IDE-secondary)]'>const</span>{' '}
+              <span className='text-[var(--codex-IDE-identifier)]'>UID</span>{' '}
+              <span className='text-[var(--codex-IDE-secondary)]'>=</span>{' '}
+              <span className='text-[10sxan] font-medium text-[var(--codex-IDE-value)] truncate'>
+                0x{task.id.toUpperCase()}
+              </span>
+            </span>
+          </div>
         </div>
 
         {/* Content Area */}
