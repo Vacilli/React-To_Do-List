@@ -21,6 +21,11 @@ const router = createBrowserRouter([
         element: <TaskDetails />,
         errorElement: <Error />,
       },
+      // The Sector_Null Catch-All
+      {
+        path: '*',
+        element: <Error />,
+      },
     ],
   },
 ])
