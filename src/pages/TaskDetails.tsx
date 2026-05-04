@@ -113,7 +113,7 @@ export default function TaskDetails() {
   const theme = getStatusTheme()
 
   return (
-    <div className='max-w-5xl mx-auto py-12 px-6 h-full overflow-y-auto animate-scan'>
+    <div className='max-w-5xl mx-auto py-6 md:py-12 px-6 h-full overflow-y-auto animate-scan'>
       {/* 1. Header Navigation */}
       <button
         className='flex items-center gap-2 text-[var(--text-dim)] hover:text-[var(--text-main)] transition-colors mb-12 group'
@@ -165,7 +165,7 @@ export default function TaskDetails() {
               <span className='text-[var(--codex-IDE-secondary)]'>const</span>{' '}
               <span className='text-[var(--codex-IDE-identifier)]'>UID</span>{' '}
               <span className='text-[var(--codex-IDE-secondary)]'>=</span>{' '}
-              <span className='text-[10sxan] font-medium text-[var(--codex-IDE-value)] truncate'>
+              <span className='text-[10px] font-medium text-[var(--codex-IDE-value)] truncate'>
                 0x{task.id.toUpperCase()}
               </span>
             </span>
@@ -173,7 +173,7 @@ export default function TaskDetails() {
         </div>
 
         {/* Content Area */}
-        <div className='p-10 relative overflow-hidden'>
+        <div className='p-6 md:p-10 relative overflow-hidden'>
           <div className='mb-12 relative z-10'>
             <span
               className={`text-[10px] font-mono uppercase tracking-[0.3em] mb-4 block ${task.status === 'archived' ? 'text-[var(--accent-secondary)]' : 'text-[var(--text-dim)]'}`}
@@ -184,7 +184,7 @@ export default function TaskDetails() {
                 : 'Protocol_Title'}
             </span>
             <h1
-              className={`text-5xl font-black tracking-tighter leading-none uppercase transition-colors duration-500 ${task.status === 'archived' ? 'text-[var(--text-main)]' : 'text-[var(--text-main)]'}`}
+              className={`text-3xl md:text-5xl font-black tracking-tighter leading-none uppercase transition-colors duration-500 ${task.status === 'archived' ? 'text-[var(--text-main)]' : 'text-[var(--text-main)]'}`}
             >
               {task.title}
             </h1>
@@ -212,10 +212,10 @@ export default function TaskDetails() {
 
         {/* Technical Metadata Footer */}
         <div
-          className={`p-6 bg-[var(--bg-sidebar)]/50 border-t grid grid-cols-1 md:grid-cols-2 gap-8 border-[var(--border-subtle)]`}
+          className={`p-6 bg-[var(--bg-sidebar)]/50 border-t grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 border-[var(--border-subtle)]`}
         >
           <div className='flex items-start gap-4'>
-            <div className='w-12 h-12 border flex items-center justify-center bg-[var(--text-main)]/5 transition-colors border-[var(--border-subtle)] text-[var(--text-dim)]'>
+            <div className='w-9 h-9 md:w-12 md:h-12 border flex items-center justify-center bg-[var(--text-main)]/5 border-[var(--border-subtle)] shrink-0'>
               <FontAwesomeIcon
                 icon={task.status === 'archived' ? faBoxArchive : faCalendarAlt}
                 className='text-sm'
@@ -240,7 +240,7 @@ export default function TaskDetails() {
           <div
             className={`flex items-start gap-4 transition-opacity ${task.updatedAt ? 'opacity-100' : 'opacity-20'}`}
           >
-            <div className='w-12 h-12 border flex items-center justify-center bg-[var(--text-main)]/5 border-[var(--border-subtle)] text-[var(--text-dim)]'>
+            <div className='w-9 h-9 md:w-12 md:h-12 border flex items-center justify-center bg-[var(--text-main)]/5 border-[var(--border-subtle)] shrink-0'>
               <FontAwesomeIcon
                 icon={faSync}
                 className={

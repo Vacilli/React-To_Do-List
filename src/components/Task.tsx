@@ -40,29 +40,29 @@ export default function Task({ task }: TaskProps) {
           ? syntaxColors.priority
           : syntaxColors.ongoing
 
-  // --- 1. LIST VIEW LOGIC ---
+  // --- 1. LIST VIEW LOGIC (RESTORED & STABILIZED) ---
   if (viewMode === 'list') {
     return (
-      <div className='group relative flex flex-row items-center justify-between gap-6 p-6 bg-[var(--bg-task-inner)] border-b border-[var(--border-subtle)] transition-all duration-300'>
-        {/* HUD Brackets */}
+      <div className='group relative flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6 p-4 md:p-6 bg-[var(--bg-task-inner)] border-b border-[var(--border-subtle)] transition-all duration-300'>
+        {/* 1. HUD Brackets (Desktop Hover Only) */}
         <div
-          className={`absolute top-0 left-0 w-2 h-2 border-t border-l opacity-0 group-hover:opacity-100 transition-all duration-300 ${currentSyntax.split(' ')[2]}`}
+          className={`absolute top-0 left-0 w-2 h-2 border-t border-l opacity-0 md:group-hover:opacity-100 transition-all duration-300 ${currentSyntax.split(' ')[2]}`}
         />
         <div
-          className={`absolute top-0 right-0 w-2 h-2 border-t border-r opacity-0 group-hover:opacity-100 transition-all duration-300 ${currentSyntax.split(' ')[2]}`}
+          className={`absolute top-0 right-0 w-2 h-2 border-t border-r opacity-0 md:group-hover:opacity-100 transition-all duration-300 ${currentSyntax.split(' ')[2]}`}
         />
         <div
-          className={`absolute bottom-0 left-0 w-2 h-2 border-b border-l opacity-0 group-hover:opacity-100 transition-all duration-300 ${currentSyntax.split(' ')[2]}`}
+          className={`absolute bottom-0 left-0 w-2 h-2 border-b border-l opacity-0 md:group-hover:opacity-100 transition-all duration-300 ${currentSyntax.split(' ')[2]}`}
         />
         <div
-          className={`absolute bottom-0 right-0 w-2 h-2 border-b border-r opacity-0 group-hover:opacity-100 transition-all duration-300 ${currentSyntax.split(' ')[2]}`}
+          className={`absolute bottom-0 right-0 w-2 h-2 border-b border-r opacity-0 md:group-hover:opacity-100 transition-all duration-300 ${currentSyntax.split(' ')[2]}`}
         />
 
-        {/* LEFT: Core Data Stack */}
+        {/* 2. LEFT: Data Stack (LOCKED Desktop Layout) */}
         <div className='flex flex-col gap-1 relative z-10 flex-grow min-w-0'>
-          <div className='flex items-center gap-3'>
+          <div className='flex items-center gap-2 md:gap-3'>
             <span
-              className={`text-[9px] font-mono font-bold uppercase tracking-[0.2em] ${isArchived ? 'text-[var(--accent-color)]/70' : currentSyntax.split(' ')[0]}`}
+              className={`text-[9px] font-mono font-bold uppercase tracking-[0.2em] shrink-0 ${isArchived ? 'text-[var(--accent-color)]/70' : currentSyntax.split(' ')[0]}`}
             >
               {isArchived
                 ? '[V]'
@@ -85,7 +85,8 @@ export default function Task({ task }: TaskProps) {
             </p>
           )}
 
-          <div className='flex items-center gap-2 pl-7 opacity-40 group-hover:opacity-80 transition-opacity'>
+          {/* TIMESTAMP: Restored to your original desktop logic */}
+          <div className='flex items-center gap-2 pl-7 opacity-80 md:opacity-40 md:group-hover:opacity-80 transition-opacity'>
             <span className='text-[9px] font-mono uppercase tracking-widest text-[var(--text-dim)]'>
               timestamp:
             </span>
@@ -97,9 +98,10 @@ export default function Task({ task }: TaskProps) {
           </div>
         </div>
 
-        {/* RIGHT: Control Modules */}
-        <div className='flex items-center gap-4 relative z-10 shrink-0'>
-          <div className='flex justify-end border-[var(--border-subtle)]'>
+        {/* 3. RIGHT: Control Modules (Responsive Pivot) */}
+        {/* On Mobile: A clean row under the text. On Desktop: Back to the right side. */}
+        <div className='flex items-center justify-between md:justify-end gap-4 relative z-10 pt-3 md:pt-0 border-t border-[var(--border-subtle)]/20 md:border-none shrink-0'>
+          <div className='flex items-center border-[var(--border-subtle)]'>
             <EditOrDeleteTask task={task} />
           </div>
 
@@ -107,11 +109,12 @@ export default function Task({ task }: TaskProps) {
             to={`/task/${task.id}`}
             className={`text-[9px] font-black uppercase tracking-widest px-4 py-2 border transition-all duration-300 ${
               isArchived
-                ? 'border-[var(--accent-secondary)] text-[var(--accent-secondary)] group-hover:border-[var(--accent-primary)] group-hover:text-[var(--accent-primary)] group-hover:drop-shadow-[0_0_8px_var(--glow-color)]'
+                ? 'border-[var(--accent-secondary)] text-[var(--accent-secondary)]'
                 : `${currentSyntax} hover:bg-[var(--text-main)]/5`
             }`}
           >
-            'DEBUG_LOG'
+            <span className='md:hidden'>LOG</span>
+            <span className='hidden md:inline'>'DEBUG_LOG'</span>
           </Link>
         </div>
       </div>

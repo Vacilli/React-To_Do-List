@@ -20,11 +20,16 @@ export default function BackToTop({
       onClick={() =>
         scrollRef.current?.scrollTo({ top: 0, behavior: 'smooth' })
       }
-      className={`fixed bottom-10 right-10 z-[100] group flex items-center justify-center w-12 h-12 transition-all duration-700 ${
-        visible
-          ? 'opacity-100 translate-y-0 scale-100'
-          : 'opacity-0 translate-y-10 scale-75 pointer-events-none'
-      }`}
+      className={`fixed z-[100] group flex items-center justify-center w-12 h-12 transition-all duration-700
+        /* Mobile Positioning */
+        bottom-10 left-1/2 -translate-x-1/2 
+        /* Desktop Positioning (Overriding Mobile) */
+        md:left-auto md:right-10 md:translate-x-0
+        ${
+          visible
+            ? 'opacity-100 translate-y-0 scale-100'
+            : 'opacity-0 translate-y-10 scale-75 pointer-events-none'
+        }`}
       title='SYSTEM_RESET_TOP'
     >
       {/* Outer Rotating Frame (Artifact Style) */}

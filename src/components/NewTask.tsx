@@ -85,7 +85,7 @@ export default function NewTask({ onSave }: NewTaskProps) {
   return (
     <div className='h-full flex flex-col bg-[var(--bg-sidebar)] text-[var(--text-main)]'>
       {/* Header Area */}
-      <div className='p-8 border-b border-[var(--border-subtle)]'>
+      <div className='p-4 md:p-8 border-b border-[var(--border-subtle)]'>
         <h2 className='text-lg font-black text-[var(--text-main)] uppercase tracking-tighter flex items-center gap-3'>
           <FontAwesomeIcon
             icon={editingTask ? faPen : faPlus}
@@ -102,7 +102,7 @@ export default function NewTask({ onSave }: NewTaskProps) {
 
       <form
         onSubmit={handleSubmit}
-        className='flex-1 flex flex-col border border-[var(--border-subtle)] p-8 space-y-6 bg-[var(--bg-main)]'
+        className='flex-1 flex flex-col border border-[var(--border-subtle)] p-4 md:p-8 space-y-6 bg-[var(--bg-main)]'
       >
         {/* Task Name Input */}
         <div className='space-y-3'>

@@ -14,7 +14,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-export default function Sidebar() {
+interface SidebarProps {
+  onSelect?: () => void // Optional so it doesn't break the Desktop version
+}
+
+export default function Sidebar({ onSelect }: SidebarProps) {
   const { allTasks, setEditingTask, selectedFilter, setFilter, openPanel } =
     useTasks()
   const { theme, toggleTheme } = useTheme()
@@ -24,6 +28,11 @@ export default function Sidebar() {
   const handleNewTaskClick = () => {
     setEditingTask(null)
     openPanel()
+    handleLinkClick()
+  }
+
+  const handleLinkClick = () => {
+    if (onSelect) onSelect() // Trigger the close if the prop exists
   }
 
   const handleFilterClick = (id: TaskFilter) => {
@@ -37,6 +46,7 @@ export default function Sidebar() {
     queueMicrotask(() => {
       setEditingTask(null)
       setFilter(id)
+      handleLinkClick()
     })
   }
 
