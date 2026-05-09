@@ -215,15 +215,20 @@ function TasksProvider({ children }: TasksProviderProps) {
       )
     }
 
-    // 3. NEW: Sorting Logic (The final touch)
-    // We clone the array with [...] to avoid mutating state
     return [...filtered].sort((a, b) => {
+      // --- GLOBAL STATUS PROTOCOL ---
+      // If one task is active and the other is completed/archived,
+      // move the non-active one to the bottom.
+      if (a.status !== b.status) {
+        if (a.status === 'completed' || a.status === 'archived') return 1
+        if (b.status === 'completed' || b.status === 'archived') return -1
+      }
+
       // --- PRIORITY PROTOCOL ---
       if (sortBy === 'Priority') {
         if (a.priority !== b.priority) {
           return a.priority ? -1 : 1
         }
-        // Tie-breaker: Newest first within the same priority group
         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       }
 
