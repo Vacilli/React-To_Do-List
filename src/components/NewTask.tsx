@@ -102,7 +102,7 @@ export default function NewTask({ onSave }: NewTaskProps) {
 
       <form
         onSubmit={handleSubmit}
-        className='flex-1 flex flex-col border border-[var(--border-subtle)] p-4 md:p-8 space-y-6 bg-[var(--bg-main)]'
+        className='flex-1 flex flex-col shadow-[var(--shadow-codex)] border border-[var(--border-subtle)] p-4 md:p-8 space-y-6 bg-[var(--bg-main)]'
       >
         {/* Task Name Input */}
         <div className='space-y-3'>

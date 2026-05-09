@@ -133,7 +133,7 @@ export default function TaskDetails() {
 
       {/* 2. The Main Protocol Window */}
       <div
-        className={`bg-[var(--bg-task-inner)] border rounded-sm shadow-2xl transition-all duration-500 relative border-[var(--border-subtle)]`}
+        className={`bg-[var(--bg-task-inner)] border rounded-sm shadow-[var(--shadow-codex)] transition-all duration-500 relative border-[var(--border-subtle)]`}
       >
         {task.status === 'archived' && (
           <>
@@ -199,13 +199,17 @@ export default function TaskDetails() {
                 ? 'Fragment_Parameters'
                 : 'Operational_Parameters'}
             </span>
-            <div className='bg-[var(--bg-main)]/30 p-8 border-l-2 transition-colors border-[var(--border-subtle)]'>
-              <p
-                className={`text-lg leading-relaxed whitespace-pre-wrap font-mono italic transition-colors text-[var(--text-main)]/80`}
-              >
-                /* {task.description || 'No context provided for this entry.'}{' '}
-                */
-              </p>
+            <div className='bg-[var(--bg-main)]/30 border-l-2 transition-colors border-[var(--border-subtle)] relative'>
+              {/* The Scrollable Container */}
+              <div className='p-8 max-h-[40vh] overflow-y-auto custom-scrollbar'>
+                <p className='text-lg leading-relaxed whitespace-pre-wrap break-words font-mono italic transition-colors text-[var(--text-main)]/80'>
+                  /* {task.description || 'No context provided for this entry.'}{' '}
+                  */
+                </p>
+              </div>
+
+              {/* Optional: The "Codex Fade" (Only looks good in NetSphere) */}
+              <div className='absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-[var(--bg-task-inner)]/50 to-transparent pointer-events-none' />
             </div>
           </div>
         </div>

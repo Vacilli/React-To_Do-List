@@ -216,6 +216,9 @@ function TasksProvider({ children }: TasksProviderProps) {
     }
 
     return [...filtered].sort((a, b) => {
+      console.log(
+        `Comparing: "${a.title + ' ' + a.status}" vs "${b.title + b.status}"`,
+      )
       // --- GLOBAL STATUS PROTOCOL ---
       // If one task is active and the other is completed/archived,
       // move the non-active one to the bottom.
