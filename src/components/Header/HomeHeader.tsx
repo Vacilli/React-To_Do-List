@@ -16,16 +16,19 @@ const HomeHeader: React.FC<HomeHeaderProps> = ({
   return (
     <header className='h-16 flex items-center justify-between px-8 bg-[var(--bg-task)] border-b border-[var(--border-subtle)] hidden md:flex'>
       <div className='w-[80%] pr-8'>
-        <div className='relative group flex items-center'>
+        {/* WE WERE MISSING THIS: Added the codex-edge-cursor wrapper class here */}
+        <div className='relative group flex items-center w-full codex-edge-cursor'>
           <span className='absolute left-0 text-[var(--text-dim)] group-focus-within:text-[var(--text-main)] transition-colors'>
             <FontAwesomeIcon icon={faTerminal} className='text-xs' />
           </span>
+
           <input
             type='text'
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
             placeholder='EXECUTE_SEARCH_PROTOCOL...'
-            className='w-full bg-transparent border-b border-[var(--border-subtle)] focus:border-[var(--text-main)] py-2 pl-7 pr-4 text-sm font-mono tracking-[0.1em] text-[var(--text-main)] focus:outline-none transition-all placeholder:text-[var(--text-dim)] uppercase'
+            /* codex-terminal-input ensures the native line updates color, while the wrapper handles the far-right indicator block */
+            className='w-full bg-transparent border-b border-[var(--border-subtle)] focus:border-[var(--text-main)] py-2 pl-7 pr-8 text-sm font-mono tracking-[0.1em] text-[var(--text-main)] focus:outline-none transition-all placeholder:text-[var(--text-dim)] uppercase codex-terminal-input'
           />
         </div>
       </div>

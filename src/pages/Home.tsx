@@ -5,7 +5,7 @@ function Home() {
   return (
     <div className='relative min-h-screen'>
       {/* 1. THE WALL: Force solid background and kill the light border */}
-      <div className='sticky hidden md:block top-0 z-[100] bg-[#191b1c] border-b border-[var(--border-subtle)]'>
+      <div className='sticky hidden md:block top-0 z-[100] bg-[#191b1c]'>
         <TaskListControls />
       </div>
 

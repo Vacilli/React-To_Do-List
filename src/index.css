@@ -136,3 +136,27 @@ body {
 .animate-scan {
   animation: netsphere-scan 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
+
+/* --- Codex OS Terminal Focus Enhancements --- */
+@keyframes codex-terminal-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Generates the thick far-right terminal block cursor on input focus */
+.codex-edge-cursor:focus-within::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 12px;
+  width: 4px;
+  height: 16px;
+  background-color: var(--accent-action);
+  animation: codex-terminal-blink 1s step-end infinite;
+  box-shadow: 0 0 12px var(--accent-action);
+}
